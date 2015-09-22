@@ -50,23 +50,10 @@ class namespace(OrderedDict) :
 	@classmethod
 	def load(cls, filename) :
 
-		def wrap(data) :
-			return data
-			if type(data) is dict :
-				return namespace({
-					k: wrap(v)
-					for k,v in data.items()
-					})
-			if isinstance(data, list) or isinstance(data, tuple) :
-				return [wrap(v) for v in data]
-			return data
-
 		if hasattr(filename, 'read') :
-			result = yaml.load(stream=filename, Loader=NamespaceYAMLLoader)
-		else :
-			with open(filename) as f:
-				result = yaml.load(stream=f, Loader=NamespaceYAMLLoader)
-		return wrap(result)
+			return yaml.load(stream=filename, Loader=NamespaceYAMLLoader)
+		with open(filename) as f:
+			return yaml.load(stream=f, Loader=NamespaceYAMLLoader)
 
 	def dump(self, filename=None) :
 
