@@ -173,6 +173,14 @@ class namespace_Test(unittest.TestCase) :
 
 		self.assertFalse('a-b' in dir(ns))
 
+	def test_load_recursiveArray(self):
+		ns = namespace.loads(
+			"list:\n"
+			"  - key1: value1\n"
+			)
+		self.assertEqual(ns,
+			namespace(list=[namespace(key1='value1')]))
+
 if __name__ == '__main__':
 	unittest.main()
 
