@@ -157,6 +157,13 @@ class namespace_Test(unittest.TestCase) :
 		self.assertEqual(ns.dump(),
 			yamlcontent)
 
+	def test_dir_withRegularAttributes(self):
+		ns = namespace()
+		ns.attr1 = 'value1'
+
+		self.assertTrue('attr1' in dir(ns))
+		self.assertFalse('bad' in dir(ns))
+
 if __name__ == '__main__':
 	unittest.main()
 

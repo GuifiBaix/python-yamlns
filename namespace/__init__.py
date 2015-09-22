@@ -34,6 +34,11 @@ class namespace(OrderedDict) :
 		except KeyError:
 			super(namespace, self).__delattr__(name)
 
+	def __dir__(self):
+		attributes = super(namespace, self).__dir__()
+		attributes.extend(self.keys())
+		return attributes
+
 	def deepcopy(self) :
 		return self.loads(self.dump())
 
