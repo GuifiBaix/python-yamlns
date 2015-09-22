@@ -1,6 +1,7 @@
 # namespace
 
-An ordered dictionary whose values can be accessed as items or attributes.
+An ordered dictionary whose values can be accessed as items or attributes
+and has direct mapping to YAML.
 
 It also provides some goodies:
 
@@ -50,6 +51,13 @@ attribute2: value2
 datetime.date(2015,9,23)
 >>> n.attribute7
 ['value7.1', 'value7.2']
+```
+
+## Command line tools usage
+
+```bash
+nstemplate apply <template> <yamlfile> <output>
+nstemplate extract <template> <yamlskeleton>
 ```
 
 
