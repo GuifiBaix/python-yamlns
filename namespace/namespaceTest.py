@@ -1,0 +1,166 @@
+#!/usr/bin/python3
+
+from namespace import namespace
+import decimal
+from namespace import dateutils
+
+
+import unittest
+
+class namespace_Test(unittest.TestCase) :
+
+	def test_construction_default(self):
+		ns = namespace()
+		self.assertEqual(ns.dump(),
+			"{}\n")
+
+	def test_setattribute(self):
+		ns = namespace()
+		ns.lala = "boo"
+		self.assertEqual(ns.lala, 'boo')
+		self.assertEqual(ns['lala'], 'boo')
+		self.assertEqual(ns.dump(),
+			"lala: boo\n")
+
+	def test_setattribute_twice_overwrites(self):
+		ns = namespace()
+		ns.lala = "boo"
+		ns.lala = "foo"
+		self.assertEqual(ns.lala, 'foo')
+		self.assertEqual(ns['lala'], 'foo')
+		self.assertEqual(ns.dump(),
+			"lala: foo\n")
+
+	def test_setattribute_many(self):
+		ns = namespace()
+		ns.lala = "boo"
+		ns.lola = "foo"
+		self.assertEqual(ns.lola, 'foo')
+		self.assertEqual(ns['lola'], 'foo')
+		self.assertEqual(ns.dump(),
+			"lala: boo\n"
+			"lola: foo\n")
+
+	def test_setattribute_differentOrder(self):
+		ns = namespace()
+		ns.lola = "foo"
+		ns.lala = "boo"
+		self.assertEqual(ns.dump(),
+			"lola: foo\n"
+			"lala: boo\n"
+			)
+
+	def test_delattribute(self):
+		ns = namespace()
+		ns.lola = "foo"
+		ns.lala = "boo"
+		del ns.lola
+		self.assertEqual(ns.dump(),
+			"lala: boo\n"
+			)
+
+	def test_delattribute(self):
+		ns = namespace()
+		ns.lola = "foo"
+		with self.assertRaises(AttributeError):
+			del ns.notexisting
+
+	def test_load_None(self):
+		self.assertEqual(namespace.loads(""),
+			None)
+
+	def test_load_empty(self):
+		self.assertEqual(namespace.loads("{}"),
+			namespace())
+
+	def test_reload(self):
+		yamlcontent = (
+			"lala: boo\n"
+			"lola: foo\n"
+			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+	def test_reload_inverseOrder(self):
+		yamlcontent = (
+			"lola: foo\n"
+			"lala: boo\n"
+			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+	def test_subnamespaces(self) :
+		ns = namespace()
+		ns.sub = namespace()
+		ns.sub.foo = "value1"
+		ns.sub.bar = "value2"
+		self.assertEqual(ns.dump(),
+			"sub:\n"
+			"  foo: value1\n"
+			"  bar: value2\n"
+			)
+
+	def test_reload_subnamespaces(self) :
+		yamlcontent = (
+			"sub:\n"
+			"  foo: value1\n"
+			"  bar: value2\n"
+			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+	def test_load_decimal(self) :
+		yamlcontent = (
+			"decimal: 3.41"
+			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(type(ns.decimal),
+			decimal.Decimal)
+		self.assertEqual(ns.decimal,
+			decimal.Decimal('3.41'))
+
+	def test_dump_float(self) :
+		yamlcontent = (
+			"decimal: 3.41\n"
+			)
+		ns = namespace()
+		ns.decimal = 3.41
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+	def test_dump_decimal(self) :
+		yamlcontent = (
+			"decimal: 3.41\n"
+			)
+		ns = namespace()
+		ns.decimal = decimal.Decimal('3.41')
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+	def test_load_date(self):
+		yamlcontent = (
+			"adate: 2000-02-28\n"
+			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(type(ns.adate),
+			dateutils.Date)
+
+	def test_dump_date(self):
+		yamlcontent = (
+			"adate: 2000-02-28\n"
+			)
+		ns = namespace()
+		ns.adate = dateutils.Date(2000,2,28)
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+if __name__ == '__main__':
+	unittest.main()
+
+
+
+
+
