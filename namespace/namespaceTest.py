@@ -157,12 +157,21 @@ class namespace_Test(unittest.TestCase) :
 		self.assertEqual(ns.dump(),
 			yamlcontent)
 
-	def test_dir_withRegularAttributes(self):
+	def test_dir_withNonExistingAttributes(self):
 		ns = namespace()
 		ns.attr1 = 'value1'
-
-		self.assertTrue('attr1' in dir(ns))
 		self.assertFalse('bad' in dir(ns))
+
+	def test_dir_withExistingAttributes(self):
+		ns = namespace()
+		ns.attr1 = 'value1'
+		self.assertTrue('attr1' in dir(ns))
+
+	def test_dir_withNonIdentifierNames(self):
+		ns = namespace()
+		ns['a-b'] = 'value1'
+
+		self.assertFalse('a-b' in dir(ns))
 
 if __name__ == '__main__':
 	unittest.main()

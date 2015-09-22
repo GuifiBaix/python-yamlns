@@ -36,7 +36,7 @@ class namespace(OrderedDict) :
 
 	def __dir__(self):
 		attributes = super(namespace, self).__dir__()
-		attributes.extend(self.keys())
+		attributes.extend(k for k in self.keys() if k.isidentifier())
 		return attributes
 
 	def deepcopy(self) :
