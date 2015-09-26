@@ -5,19 +5,19 @@ and has direct mapping to YAML.
 
 It also provides some goodies:
 
-- It has direct mapping to YAML using `dump()` and `load()` methods.
-- The items are stored in YAML as like the ones in a regular dictionary
-  that is, without the `odict` tag, but still preserves insertion order.
-  Preserving the order is not YAML compliant but quite convenient for most uses.
-- YAML `floats` are loaded as Python `Decimal` and Python `Decimal` are stored as YAML `floats`..
-  This preserves the precision of the stored data on succesive load/store cycles.
-- Attribute access can be used to fill templates with complex structures
-  from a YAML file using the stock `format` method.
-- Given a template, `dumpTemplateVars` extracts an empty YAML skeleton
-  you can fill to apply it to the template.
-- Command line tools are provided to fill templates using YAML files
-  and to extract YAML skeletons from existing templates.
-
+- Direct mapping to YAML using `dump()` and `load()` methods.
+- There are several convenient variations from the YAML specs in the way value types are mapped between YAML and Python:
+	- Mappings (dict) are loaded as namespaces. Those preserve the insertion order, as they are based on odict.
+      This way the insertion order and the order in the original loaded file is preserved when stored.
+    - YAML floats are loaded as `Decimal` and `Decimal` objects are stored as regular
+      This removes the lose of precision when succesive load/store cycles are alternated.
+    - YAML dates are maped to an extension of date which provides formatting options as attributes.
+      This enables the use of such attributes in `format` templates.
+- Tools to `format` templates with complex namespace structures.
+    - Given the attribute like access `format` templates result cleaner.
+    - API to fill a `format` template like file with a YAML one.
+    - API to extract an empty YAML scheletton given a template with substitutions.
+    - Command line tool to make those two functions
 
 
 ## Example
