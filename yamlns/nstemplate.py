@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import unittest
-import namespace
+import yamlns
 import sys
 import re
 import io
@@ -11,12 +11,12 @@ def collectVars(content) :
 	return [item.group(1) for item in re.finditer(pattern, content)]
 
 def dumpVarsAsYaml(theVars) :
-	ns = namespace.namespace()
+	ns = yamlns.namespace()
 	for segments in (var.split('.') for var in sorted(theVars)) :
 		target = ns
 		for segment in segments[:-1] :
 			if segment not in target:
-				target[segment] = namespace.namespace()
+				target[segment] = yamlns.namespace()
 			# TODO: double check it is a ns
 			target = target[segment]
 		target[segments[-1]] = ''
@@ -225,7 +225,7 @@ def main(args=sys.argv) :
 		return 0
 
 	if args.subcommand == 'apply' :
-		yaml = namespace.namespace.load(args.input_yaml)
+		yaml = yamlns.namespace.load(args.input_yaml)
 		apply(yaml, args.template, args.output, args.encoding)
 		return 0
 

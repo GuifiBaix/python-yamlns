@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
-from namespace import namespace
+from yamlns import namespace
 import decimal
-from namespace import dateutils
+from yamlns import dateutils
 
 
 import unittest

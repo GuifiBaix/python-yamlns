@@ -4,7 +4,7 @@ from setuptools import setup
 readme = open("README.md").read()
 
 setup(
-	name = "namespace",
+	name = "yamlnamespace",
 	version = "0.1",
 	description = "Attribute like accessible dictionary, with YAML IO",
 	author = "David Garcia Garzon",
@@ -13,23 +13,21 @@ setup(
 	long_description = readme,
 	license = 'GNU General Public License v3 or later (GPLv3+)',
 	packages=[
-		'namespace',
+		'yamlns',
 		],
 	scripts=[
-		'namespace/nstemplate.py',
+		'yamlns/nstemplate.py',
 		],
 	install_requires=[
 		'PyYAML',
 	],
 	package_data = {
     },
-	test_suite = 'namespace',
+	test_suite = 'yamlns',
 	test_runner = 'colour_runner.runner.ColourTextTestRunner',
 	classifiers = [
 		'Programming Language :: Python',
 		'Programming Language :: Python :: 3',
-		'Topic :: Multimedia',
-		'Topic :: Scientific/Engineering',
 		'Topic :: Software Development :: Libraries :: Python Modules',
 		'Intended Audience :: Developers',
 		'Intended Audience :: Science/Research',

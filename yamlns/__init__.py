@@ -5,7 +5,7 @@ import yaml
 from collections import OrderedDict
 import decimal
 import datetime
-from namespace import dateutils
+from yamlns import dateutils
 
 class namespace(OrderedDict) :
 	"""A dictionary whose values can be accessed also as attributes
