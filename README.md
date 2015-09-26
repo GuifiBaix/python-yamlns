@@ -23,7 +23,7 @@ It also provides some goodies:
 ## Example
 
 ```python
->>> from namespace import namespace as ns
+>>> from yamlns import namespace as ns
 >>> n = ns()
 >>> n.attribute1 = "value1"
 >>> ns['attribute2'] = "value2"
