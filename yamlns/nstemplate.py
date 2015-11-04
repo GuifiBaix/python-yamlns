@@ -3,21 +3,6 @@
 import unittest
 import yamlns
 import sys
-import re
-import io
-
-def varsTree(theVars):
-	return yamlns._varsTree(theVars)
-	ns = yamlns.namespace()
-	for segments in (var.split('.') for var in sorted(theVars)) :
-		target = ns
-		for segment in segments[:-1] :
-			if segment not in target:
-				target[segment] = yamlns.namespace()
-			# TODO: double check it is a ns
-			target = target[segment]
-		target[segments[-1]] = ''
-	return ns
 
 def varsTreeYaml(theVars) :
 	return yamlns._varsTree(theVars).dump()
