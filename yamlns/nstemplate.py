@@ -10,7 +10,7 @@ def collectVars(content) :
 	pattern = r'{([^}^[]*)(\[[^]]\])?}'
 	return [item.group(1) for item in re.finditer(pattern, content)]
 
-def dumpVarsAsYaml(theVars) :
+def varsTree(theVars):
 	ns = yamlns.namespace()
 	for segments in (var.split('.') for var in sorted(theVars)) :
 		target = ns
@@ -20,25 +20,14 @@ def dumpVarsAsYaml(theVars) :
 			# TODO: double check it is a ns
 			target = target[segment]
 		target[segments[-1]] = ''
+	return ns
 
-	output = io.StringIO()
-	ns.dump(output)
-	return output.getvalue()
+def varsTreeYaml(theVars) :
+	return varsTree(theVars).dump()
 
-def apply(yaml, template, output, encoding='utf-8') :
-	with open(template, encoding=encoding) as f :
-		content = f.read()
-	result = content.format(**yaml)
-	with open(output, 'w', encoding=encoding) as f :
-		f.write(result)
-
-def extract(input_template, output_yaml, encoding='utf-8') :
-	with open(input_template, encoding=encoding) as f :
-		content = f.read()
-	theVars = collectVars(content)
-	yaml = dumpVarsAsYaml(theVars)
-	with open(output_yaml, 'w') as f :
-		f.write(yaml)
+def templateVarsAsYaml(content):
+	templateVariables = collectVars(content)
+	return varsTreeYaml(templateVariables)
 
 class NSTemplate_test(unittest.TestCase) :
 
@@ -92,39 +81,39 @@ class NSTemplate_test(unittest.TestCase) :
 			'nice',
 			])
 
-	def test_dumpVarsAsYaml(self) :
+	def test_varsTree_plainVars(self) :
 		theVars = [
 			'boo',
 			'far',
 			'nice',
 			]
-		yaml = dumpVarsAsYaml(theVars)
+		yaml = varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'boo: \'\'\n'
 			'far: \'\'\n'
 			'nice: \'\'\n'
 			)
 
-	def test_dumpVarsAsYaml_unordered(self) :
+	def test_varsTree_unordered(self) :
 		theVars = [
 			'nice',
 			'far',
 			'boo',
 			]
-		yaml = dumpVarsAsYaml(theVars)
+		yaml = varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'boo: \'\'\n'
 			'far: \'\'\n'
 			'nice: \'\'\n'
 			)
 
-	def test_dumpVarsAsYaml_withSubVars(self) :
+	def test_varsTree_withSubVars(self) :
 		theVars = [
 			'upper.boo',
 			'upper.far',
 			'upper.nice',
 			]
-		yaml = dumpVarsAsYaml(theVars)
+		yaml = varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'upper:\n'
 			'  boo: \'\'\n'
@@ -132,13 +121,13 @@ class NSTemplate_test(unittest.TestCase) :
 			'  nice: \'\'\n'
 			)
 
-	def test_dumpVarsAsYaml_withManySubVars(self) :
+	def test_varsTree_withManySubVars(self) :
 		theVars = [
 			'upper.boo',
 			'lower.nice',
 			'upper.far',
 			]
-		yaml = dumpVarsAsYaml(theVars)
+		yaml = varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'lower:\n'
 			'  nice: \'\'\n'
@@ -147,13 +136,13 @@ class NSTemplate_test(unittest.TestCase) :
 			'  far: \'\'\n'
 			)
 
-	def test_dumpVarsAsYaml_withSubSubVars(self) :
+	def test_varsTree_withSubSubVars(self) :
 		theVars = [
 			'upper.lower.boo',
 			'upper.lower.far',
 			'upper.lower.nice',
 			]
-		yaml = dumpVarsAsYaml(theVars)
+		yaml = varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'upper:\n'
 			'  lower:\n'
@@ -162,6 +151,37 @@ class NSTemplate_test(unittest.TestCase) :
 			'    nice: \'\'\n'
 			)
 
+	def test_varsTreeYaml(self) :
+		theVars = [
+			'upper.lower.boo',
+			'upper.lower.far',
+			'upper.lower.nice',
+			]
+		yaml = varsTreeYaml(theVars)
+		self.assertEqual(yaml,
+			'upper:\n'
+			'  lower:\n'
+			'    boo: \'\'\n'
+			'    far: \'\'\n'
+			'    nice: \'\'\n'
+			)
+
+
+
+def apply(yamlfile, template, output, encoding='utf-8') :
+	yaml = yamlns.namespace.load(yamlfile)
+	with open(template, encoding=encoding) as f :
+		content = f.read()
+	result = content.format(**yaml)
+	with open(output, 'w', encoding=encoding) as f :
+		f.write(result)
+
+def extract(input_template, output_yaml, encoding='utf-8') :
+	with open(input_template, encoding=encoding) as f :
+		content = f.read()
+	yaml = templateVarsAsYaml(content)
+	with open(output_yaml, 'w') as f :
+		f.write(yaml)
 
 
 def main(args=sys.argv) :
@@ -220,13 +240,11 @@ def main(args=sys.argv) :
 	args = parser.parse_args()
 
 	if args.subcommand == 'extract' :
-
 		extract(args.input_template, args.output_yaml, args.encoding)
 		return 0
 
 	if args.subcommand == 'apply' :
-		yaml = yamlns.namespace.load(args.input_yaml)
-		apply(yaml, args.template, args.output, args.encoding)
+		apply(args.input_yaml, args.template, args.output, args.encoding)
 		return 0
 
 	parser.print_help()
