@@ -4,12 +4,9 @@ import unittest
 import yamlns
 import sys
 
-def varsTreeYaml(theVars) :
-	return yamlns._varsTree(theVars).dump()
-
 def templateVarsAsYaml(content):
-	templateVariables = yamlns._collectVars(content)
-	return varsTreeYaml(templateVariables)
+	ns = yamlns.namespace.fromTemplateVars(content)
+	return ns.dump()
 
 class NSTemplate_test(unittest.TestCase) :
 
@@ -133,21 +130,6 @@ class NSTemplate_test(unittest.TestCase) :
 			'    nice: \'\'\n'
 			)
 
-	def test_varsTreeYaml(self) :
-		theVars = [
-			'upper.lower.boo',
-			'upper.lower.far',
-			'upper.lower.nice',
-			]
-		yaml = varsTreeYaml(theVars)
-		self.assertEqual(yaml,
-			'upper:\n'
-			'  lower:\n'
-			'    boo: \'\'\n'
-			'    far: \'\'\n'
-			'    nice: \'\'\n'
-			)
-
 
 
 def apply(yamlfile, template, output, encoding='utf-8') :
@@ -161,9 +143,9 @@ def apply(yamlfile, template, output, encoding='utf-8') :
 def extract(input_template, output_yaml, encoding='utf-8') :
 	with open(input_template, encoding=encoding) as f :
 		content = f.read()
-	yaml = templateVarsAsYaml(content)
+	ns = yamlns.namespace.fromTemplateVars(content)
 	with open(output_yaml, 'w') as f :
-		f.write(yaml)
+		f.write(ns.dump())
 
 
 def main(args=sys.argv) :
