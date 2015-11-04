@@ -7,6 +7,24 @@ import decimal
 import datetime
 from yamlns import dateutils
 
+def _collectVars(content) :
+	import re
+	pattern = r'{([^}^[]*)(\[[^]]\])?}'
+	return [item.group(1) for item in re.finditer(pattern, content)]
+
+def _varsTree(theVars):
+	ns = namespace()
+	for segments in (var.split('.') for var in sorted(theVars)) :
+		target = ns
+		for segment in segments[:-1] :
+			if segment not in target:
+				target[segment] = namespace()
+			# TODO: double check it is a ns
+			target = target[segment]
+		target[segments[-1]] = ''
+	return ns
+
+
 class namespace(OrderedDict) :
 	"""A dictionary whose values can be accessed also as attributes
 	and can be loaded and dumped as YAML."""

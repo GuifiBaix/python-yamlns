@@ -6,11 +6,8 @@ import sys
 import re
 import io
 
-def collectVars(content) :
-	pattern = r'{([^}^[]*)(\[[^]]\])?}'
-	return [item.group(1) for item in re.finditer(pattern, content)]
-
 def varsTree(theVars):
+	return yamlns._varsTree(theVars)
 	ns = yamlns.namespace()
 	for segments in (var.split('.') for var in sorted(theVars)) :
 		target = ns
@@ -23,10 +20,10 @@ def varsTree(theVars):
 	return ns
 
 def varsTreeYaml(theVars) :
-	return varsTree(theVars).dump()
+	return yamlns._varsTree(theVars).dump()
 
 def templateVarsAsYaml(content):
-	templateVariables = collectVars(content)
+	templateVariables = yamlns._collectVars(content)
 	return varsTreeYaml(templateVariables)
 
 class NSTemplate_test(unittest.TestCase) :
@@ -44,20 +41,20 @@ class NSTemplate_test(unittest.TestCase) :
 
 	def test_collectVars_withNoVar(self) :
 		content = "booo"
-		result = collectVars(content)
+		result = yamlns._collectVars(content)
 		self.assertEqual(result,[
 			])
 
 	def test_collectVars_withVar(self) :
 		content = "b{boo}o"
-		result = collectVars(content)
+		result = yamlns._collectVars(content)
 		self.assertEqual(result,[
 			'boo',
 			])
 
 	def test_collectVars_withVar(self) :
 		content = "b{boo}o{far}34"
-		result = collectVars(content)
+		result = yamlns._collectVars(content)
 		self.assertEqual(result,[
 			'boo',
 			'far',
@@ -65,7 +62,7 @@ class NSTemplate_test(unittest.TestCase) :
 
 	def test_collectVars_multiline(self) :
 		content = "b{boo}o{far}34\ndfs{nice}"
-		result = collectVars(content)
+		result = yamlns._collectVars(content)
 		self.assertEqual(result,[
 			'boo',
 			'far',
@@ -74,7 +71,7 @@ class NSTemplate_test(unittest.TestCase) :
 
 	def test_collectVars_indexinDroped(self) :
 		content = "b{boo}o{far}34\ndfs{nice[3]}"
-		result = collectVars(content)
+		result = yamlns._collectVars(content)
 		self.assertEqual(result,[
 			'boo',
 			'far',
@@ -87,7 +84,7 @@ class NSTemplate_test(unittest.TestCase) :
 			'far',
 			'nice',
 			]
-		yaml = varsTree(theVars).dump()
+		yaml = yamlns._varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'boo: \'\'\n'
 			'far: \'\'\n'
@@ -100,7 +97,7 @@ class NSTemplate_test(unittest.TestCase) :
 			'far',
 			'boo',
 			]
-		yaml = varsTree(theVars).dump()
+		yaml = yamlns._varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'boo: \'\'\n'
 			'far: \'\'\n'
@@ -113,7 +110,7 @@ class NSTemplate_test(unittest.TestCase) :
 			'upper.far',
 			'upper.nice',
 			]
-		yaml = varsTree(theVars).dump()
+		yaml = yamlns._varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'upper:\n'
 			'  boo: \'\'\n'
@@ -127,7 +124,7 @@ class NSTemplate_test(unittest.TestCase) :
 			'lower.nice',
 			'upper.far',
 			]
-		yaml = varsTree(theVars).dump()
+		yaml = yamlns._varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'lower:\n'
 			'  nice: \'\'\n'
@@ -142,7 +139,7 @@ class NSTemplate_test(unittest.TestCase) :
 			'upper.lower.far',
 			'upper.lower.nice',
 			]
-		yaml = varsTree(theVars).dump()
+		yaml = yamlns._varsTree(theVars).dump()
 		self.assertEqual(yaml,
 			'upper:\n'
 			'  lower:\n'
