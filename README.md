@@ -1,7 +1,8 @@
 # namespace
 
 An ordered dictionary whose values can be accessed as items or attributes
-and has direct mapping to YAML.
+way like Javascript Objects but with Pythonic goodies.
+It has direct mapping to YAML.
 
 It also provides some goodies:
 

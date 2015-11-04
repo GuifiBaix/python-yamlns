@@ -4,12 +4,12 @@ from setuptools import setup
 readme = open("README.md").read()
 
 setup(
-	name = "yamlnamespace",
+	name = "yamlns",
 	version = "0.1",
 	description = "Attribute like accessible dictionary, with YAML IO",
 	author = "David Garcia Garzon",
 	author_email = "voki@canvoki.net",
-	url = 'https://github.com/GuifiBaix/suro',
+	url = 'https://github.com/GuifiBaix/python-yamlns',
 	long_description = readme,
 	license = 'GNU General Public License v3 or later (GPLv3+)',
 	packages=[
