@@ -24,6 +24,7 @@ def catalanDate(adate) :
 	return Date(adate).catalanDate
 
 def isoToTime(iso):
+	"""Turns a string representing an iso time into a time"""
 	return datetime.time(*(int(t) for t in iso.split(':')))
 
 class Date(datetime.date) :

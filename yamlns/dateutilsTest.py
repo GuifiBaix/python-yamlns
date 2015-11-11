@@ -163,6 +163,11 @@ class DateUtils_Test(unittest.TestCase):
 			isoToTime('00:00:00:0000'),
 			datetime.time(0,0))
 
+	def test_isoToTime_ellided(self):
+		self.assertEqual(
+			isoToTime('01:02'),
+			datetime.time(1,2,0,0))
+
 	def test_Date_today(self) :
 		aDate = Date.today()
 		self.assertEqual(
