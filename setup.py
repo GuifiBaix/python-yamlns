@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from setuptools import setup
+from setuptools import setup, find_packages
 
 readme = open("README.md").read()
 
@@ -12,17 +12,14 @@ setup(
 	url = 'https://github.com/GuifiBaix/python-yamlns',
 	long_description = readme,
 	license = 'GNU General Public License v3 or later (GPLv3+)',
-	packages=[
-		'yamlns',
-		],
+	packages=find_packages(exclude=['*[tT]est*']),
 	scripts=[
 		'yamlns/nstemplate.py',
 		],
 	install_requires=[
 		'PyYAML',
 	],
-	package_data = {
-    },
+	include_package_data = True,
 	test_suite = 'yamlns',
 	test_runner = 'colour_runner.runner.ColourTextTestRunner',
 	classifiers = [
