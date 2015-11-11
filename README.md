@@ -1,18 +1,20 @@
-# namespace
+# yamlns.namespace
 
-An ordered dictionary whose values can be accessed as items or attributes
-way like Javascript Objects but with Pythonic goodies.
+An ordered dictionary whose values can be accessed
+either as items or as attributes,
+like in Javascript Objects but with Pythonic goodies.
 It has direct mapping to YAML.
 
 It also provides some goodies:
 
 - Direct mapping to YAML using `dump()` and `load()` methods.
 - There are several convenient variations from the YAML specs in the way value types are mapped between YAML and Python:
-	- Mappings (dict) are loaded as namespaces. Those preserve the insertion order, as they are based on odict.
+	- YAML mappings (dicts) are loaded as namespaces.
+	- Namespaces preserve the insertion order, as they are based on odict.
       This way the insertion order and the order in the original loaded file is preserved when stored.
-    - YAML floats are loaded as `Decimal` and `Decimal` objects are stored as regular
-      This removes the lose of precision when succesive load/store cycles are alternated.
-    - YAML dates are maped to an extension of date which provides formatting options as attributes.
+    - YAML floats are loaded as `Decimal` and `Decimal` objects are stored as regular YAML floats.
+      This avoids losing precision when succesive load/store cycles are alternated.
+    - YAML dates are maped to an extension of `datetime.date` which provides formatting options as attributes.
       This enables the use of such attributes in `format` templates.
 - Tools to `format` templates with complex namespace structures.
     - Given the attribute like access `format` templates result cleaner.
@@ -52,6 +54,40 @@ attribute2: value2
 datetime.date(2015,9,23)
 >>> n.attribute7
 ['value7.1', 'value7.2']
+```
+
+### Templating example:
+
+```python
+>>> template = (
+... 	"{client.name} {client.midname[0]}. {client.surname} buys {item.name} "
+...     "by {item.price.amount:0.02f} {item.price.coin}."
+... )
+...
+>>> print(ns.fromTemplate(template).dump())
+client:
+  name: ''
+  midname: ''
+  surname: ''
+item:
+  name: ''
+  price:
+    amount: ''
+    coin: ''
+
+>>> template.format(**ns.loads("""
+client:
+  name: 'John'
+  midname: 'Archivald'
+  surname: 'Doe'
+item:
+  name: 'Apples'
+  price:
+    amount: 30
+    coin: 'dollars'
+"""))
+John A. Doe buys Apples by 30.00 dollars.
+
 ```
 
 ## Command line tools usage

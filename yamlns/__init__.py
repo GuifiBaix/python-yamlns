@@ -79,12 +79,12 @@ class namespace(OrderedDict) :
 			dumpit(f)
 
 	@classmethod
-	def fromTemplateVars(templateContent):
+	def fromTemplateVars(clss, templateContent):
 		"""Given a string with format template substitutions
 		it builds a namespace having the fields to fill it.
 		Namespace leaf values will be set as empty strings.
 		"""
-		templateVariables = _collectVars(content)
+		templateVariables = _collectVars(templateContent)
 		return _varsTree(templateVariables)
 
 def _collectVars(content) :

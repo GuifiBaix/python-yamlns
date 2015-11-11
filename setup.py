@@ -6,7 +6,7 @@ readme = open("README.md").read()
 setup(
 	name = "yamlns",
 	version = "0.1",
-	description = "Attribute like accessible dictionary, with YAML IO",
+	description = "YAML serializable dictionary with dual item and attribute accessors",
 	author = "David Garcia Garzon",
 	author_email = "voki@canvoki.net",
 	url = 'https://github.com/GuifiBaix/python-yamlns',
@@ -21,7 +21,7 @@ setup(
 	],
 	include_package_data = True,
 	test_suite = 'yamlns',
-	test_runner = 'colour_runner.runner.ColourTextTestRunner',
+#	test_runner = 'colour_runner.runner.ColourTextTestRunner',
 	classifiers = [
 		'Programming Language :: Python',
 		'Programming Language :: Python :: 3',
