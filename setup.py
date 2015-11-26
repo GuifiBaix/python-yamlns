@@ -27,7 +27,6 @@ setup(
 		'Programming Language :: Python :: 3',
 		'Topic :: Software Development :: Libraries :: Python Modules',
 		'Intended Audience :: Developers',
-		'Intended Audience :: Science/Research',
 		'Development Status :: 5 - Production/Stable',
 		'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
 		'Operating System :: OS Independent',
