@@ -1,8 +1,8 @@
 language: python
 python:
-#  - "2.6"
-  - "2.7"
-  - "3.2"
+#  - "2.6" # No OrderedDict
+#  - "2.7" # OrderedDict has no __dir__ method
+#  - "3.2" # unicode prefix u"" not supported
   - "3.3"
   - "3.4"
   - "3.5"
