@@ -46,14 +46,16 @@ class namespace(OrderedDict) :
 	@classmethod
 	def loads(cls, yamlContent) :
 		import io
+		if hasattr(yamlContent, 'decode'): # bitstring
+			yamlContent = yamlContent.decode('utf-8')
 		return cls.load(io.StringIO(yamlContent))
 
 	@classmethod
-	def load(cls, filename) :
+	def load(cls, inputfile) :
 
-		if hasattr(filename, 'read') :
-			return yaml.load(stream=filename, Loader=NamespaceYAMLLoader)
-		with open(filename) as f:
+		if hasattr(inputfile, 'read') :
+			return yaml.load(stream=inputfile, Loader=NamespaceYAMLLoader)
+		with open(inputfile) as f:
 			return yaml.load(stream=f, Loader=NamespaceYAMLLoader)
 
 	def dump(self, filename=None) :
