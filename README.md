@@ -100,5 +100,17 @@ nstemplate apply <template> <yamlfile> <output>
 nstemplate extract <template> <yamlskeleton>
 ```
 
+# Change log
 
+## yamlns 0.3
+
+- Supported Python 2.7
+
+## yamlns 0.2
+
+- Include README.md in the distribution
+
+## yamlns 0.1
+
+- First PyPI release
 
