@@ -36,8 +36,24 @@ class namespace(OrderedDict) :
 			super(namespace, self).__delattr__(name)
 
 	def __dir__(self):
-		attributes = super(namespace, self).__dir__()
-		attributes.extend(k for k in self.keys() if k.isidentifier())
+
+		def isidentifier(candidate):
+			"Is the candidate string an identifier in Python 2.x"
+			try:
+				return candidate.isidentifier()
+			except AttributeError: pass
+			import keyword
+			import re
+			is_not_keyword = candidate not in keyword.kwlist
+			pattern = re.compile(r'^[a-z_][a-z0-9_]*$', re.I)
+			matches_pattern = bool(pattern.match(candidate))
+			return is_not_keyword and matches_pattern
+
+		try:
+			attributes = super(namespace, self).__dir__()
+		except AttributeError: # Py2 OrderedDict has no __dir__
+			attributes = []
+		attributes.extend(k for k in self.keys() if isidentifier(k))
 		return attributes
 
 	def deepcopy(self) :
