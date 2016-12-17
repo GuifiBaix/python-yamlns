@@ -7,7 +7,6 @@ import decimal
 import datetime
 from yamlns import dateutils
 
-
 class namespace(OrderedDict) :
 	"""A dictionary whose values can be accessed also as attributes
 	and can be loaded and dumped as YAML."""
@@ -84,16 +83,15 @@ class namespace(OrderedDict) :
 				Dumper = NamespaceYamlDumper,
 				)
 
-		if hasattr(filename,'write') :
-			dumpit(filename)
-			return
-
-		# TODO: Test None
 		# TODO: Test file
-		if filename is None or hasattr(filename,'write') :
+		if hasattr(filename,'write') :
 			return dumpit(filename)
 
-		with open(filename, 'w', encoding='utf-8') as f :
+		# TODO: Test None
+		if filename is None:
+			return dumpit(filename)
+
+		with open(filename, 'w') as f :
 			dumpit(f)
 
 	@classmethod

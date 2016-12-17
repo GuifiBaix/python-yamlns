@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+#-*- coding: utf-8 -*-
 
 from yamlns import namespace
 import decimal
@@ -180,6 +181,34 @@ class namespace_Test(unittest.TestCase) :
 			)
 		self.assertEqual(ns,
 			namespace(list=[namespace(key1='value1')]))
+
+	def test_load_fromFile(self):
+		data = u"hi: caña\n"
+		import codecs
+		with codecs.open("test.yaml",'w',encoding='utf-8') as f:
+			f.write(data)
+		try:
+			result = namespace.load("test.yaml")
+			self.assertEqual(result,
+				namespace(hi=u'caña'))
+		except: raise
+		finally:
+			import os
+			os.unlink("test.yaml")
+
+	def test_dump_toFile(self):
+		data = namespace(otra=u'caña')
+		data.dump('test.yaml')
+		try:
+			import codecs
+			with codecs.open("test.yaml",encoding='utf-8') as f:
+				result = f.read()
+			self.assertEqual(result, u"otra: caña\n")
+		except: raise
+		finally:
+			import os
+			os.unlink("test.yaml")
+
 
 if __name__ == '__main__':
 	unittest.main()
