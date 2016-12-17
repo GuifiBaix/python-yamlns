@@ -102,6 +102,10 @@ nstemplate extract <template> <yamlskeleton>
 
 # Change log
 
+## yamlns 0.4
+
+- Fix: file dumping in 2.7 used 3.0 encoding parameter
+
 ## yamlns 0.3
 
 - Supported Python 2.7

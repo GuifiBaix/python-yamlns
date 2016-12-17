@@ -5,7 +5,7 @@ readme = open("README.md").read()
 
 setup(
 	name = "yamlns",
-	version = "0.3",
+	version = "0.4",
 	description = "YAML serializable dictionary with dual item and attribute accessors",
 	author = "David Garcia Garzon",
 	author_email = "voki@canvoki.net",
