@@ -102,6 +102,10 @@ nstemplate extract <template> <yamlskeleton>
 
 # Change log
 
+## yamlns 0.5
+
+- Fix: `loads` in python2 failed to take utf-8 encoded strings as parameter
+
 ## yamlns 0.4
 
 - Fix: file dumping in 2.7 used 3.0 encoding parameter
