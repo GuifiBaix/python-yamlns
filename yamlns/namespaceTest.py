@@ -113,6 +113,18 @@ class namespace_Test(unittest.TestCase) :
 		self.assertEqual(ns.dump(),
 			yamlcontent)
 
+	def test_loads_fromEncodedUtf8(self):
+		yaml = u"hi: caña\n".encode('utf-8')
+		result = namespace.loads(yaml)
+		self.assertEqual(result,
+			namespace(hi=u'caña'))
+
+	def test_loads_unicode(self):
+		yaml = u"hi: caña\n"
+		result = namespace.loads(yaml)
+		self.assertEqual(result,
+			namespace(hi=u'caña'))
+
 	def test_load_decimal(self) :
 		yamlcontent = (
 			"decimal: 3.41"

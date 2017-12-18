@@ -7,6 +7,16 @@ import decimal
 import datetime
 from yamlns import dateutils
 
+
+def text(data):
+	try:
+		unicodetype=unicode
+	except NameError:
+		unicodetype=str
+	if isinstance(data, unicodetype):
+		return data
+	return data.decode('utf-8')
+
 class namespace(OrderedDict) :
 	"""A dictionary whose values can be accessed also as attributes
 	and can be loaded and dumped as YAML."""
@@ -60,9 +70,8 @@ class namespace(OrderedDict) :
 
 	@classmethod
 	def loads(cls, yamlContent) :
+		yamlContent = text(yamlContent)
 		import io
-		if hasattr(yamlContent, 'decode'): # bitstring
-			yamlContent = yamlContent.decode('utf-8')
 		return cls.load(io.StringIO(yamlContent))
 
 	@classmethod
