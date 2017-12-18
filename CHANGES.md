@@ -1,5 +1,9 @@
 # Change Log
 
+## yamlns 0.6
+
+- Packaging changes
+
 ## yamlns 0.5
 
 - Fix: `loads` in python2 failed to take utf-8 encoded strings as parameter
