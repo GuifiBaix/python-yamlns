@@ -86,13 +86,22 @@ class Date(datetime.date) :
 		return self.strftime("%d/%m/%Y")
 	@property
 	def catalanDate(self):
-		catalanMonths= (
+		monthNames= (
 			"gener febrer març abril maig juny "
 			"juliol agost setembre octubre novembre desembre"
 			).split()
-		monthName = catalanMonths[self.month-1]
+		monthName = monthNames[self.month-1]
 		de = "d'" if monthName[0] in 'aeiou' else 'de '
 		return "{} {}{}".format(self.day, de, monthName)
+	@property
+	def spanishDate(self):
+		monthNames=(
+			"enero febrero marzo abril mayo junio "
+			"julio agosto septiembre octubre noviembre diciembre"
+			).split()
+		monthName = monthNames[self.month-1]
+		return "{} de {}".format(self.day, monthName)
+
 	@property
 	def compact(self):
 		return self.strftime('%Y%m%d')

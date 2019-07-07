@@ -123,6 +123,12 @@ class DateUtils_Test(unittest.TestCase):
 			aDate.catalanDate,
 			"1 de gener")
 
+	def test_Date_spanish(self):
+		aDate = Date("2014-01-01")
+		self.assertEqual(
+			aDate.spanishDate,
+			"1 de enero")
+
 	def test_Date_format(self) :
 		aDate = Date("2014-01-02")
 		self.assertEqual(
