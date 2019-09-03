@@ -18,6 +18,8 @@ setup(
 		],
 	install_requires=[
 		'PyYAML',
+		'nose',
+		'rednose',
 	],
 	include_package_data = True,
 	test_suite = 'yamlns',
