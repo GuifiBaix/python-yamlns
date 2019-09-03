@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from yamlns.dateutils import (
+from .dateutils import (
 	Period, Date,
 	date, slashDate, isoDate, catalanDate,
 	isoToTime,

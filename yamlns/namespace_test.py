@@ -8,7 +8,7 @@ from yamlns import dateutils
 
 import unittest
 
-class namespace_Test(unittest.TestCase) :
+class Namespace_Test(unittest.TestCase) :
 
 	def test_construction_default(self):
 		ns = namespace()

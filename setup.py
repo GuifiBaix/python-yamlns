@@ -12,7 +12,7 @@ setup(
 	url = 'https://github.com/GuifiBaix/python-yamlns',
 	long_description = readme,
 	license = 'GNU General Public License v3 or later (GPLv3+)',
-	packages=find_packages(exclude=['*[tT]est*']),
+	packages=find_packages(exclude=['*_[tT]est*']),
 	scripts=[
 		'yamlns/nstemplate.py',
 		],
