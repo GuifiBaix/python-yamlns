@@ -3,6 +3,7 @@
 ## yamlns 0.7
 
 - Added yamlns.testutils.assertNsEqual
+- Added dateutils.Date.spanishDate
 - Using rednose as test runner
 
 ## yamlns 0.6
