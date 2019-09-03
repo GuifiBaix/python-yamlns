@@ -191,12 +191,12 @@ class Period_Test(unittest.TestCase):
 		self.assertEqual(
 			Period.trimester(2015, 2).t,
 			('2015-04-10', '2015-07-09'))
-		
+
 	def test_trimesterPeriod_t3(self) :
 		self.assertEqual(
 			Period.trimester(2015, 3).t,
 			('2015-07-10', '2015-10-09'))
-		
+
 	def test_trimesterPeriod_t4(self) :
 		self.assertEqual(
 			Period.trimester(2015, 4).t,
@@ -231,7 +231,7 @@ class Period_Test(unittest.TestCase):
 		self.assertEqual(
 			p.notUntil('2014-05-06').t,
 			('2014-05-06', '2012-07-09'))
-	
+
 	def test_notAfter_whenEarly(self) :
 		p = Period.trimester(2015, 1)
 		self.assertEqual(
