@@ -1,5 +1,10 @@
 # Change Log
 
+## yamlns 0.7
+
+- Added yamlns.testutils.assertNsEqual
+- Using rednose as test runner
+
 ## yamlns 0.6
 
 - Packaging changes
