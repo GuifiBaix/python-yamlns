@@ -5,17 +5,15 @@ import yaml
 from collections import OrderedDict
 import decimal
 import datetime
-from yamlns import dateutils
+from . import dateutils
 
 
 def text(data):
-	try:
-		unicodetype=unicode
-	except NameError:
-		unicodetype=str
-	if isinstance(data, unicodetype):
+	if type(data) is type(u''):
 		return data
-	return data.decode('utf-8')
+	if type(data) is type(b''):
+		return data.decode('utf8')
+	return type(u'')(data)
 
 class namespace(OrderedDict) :
 	"""A dictionary whose values can be accessed also as attributes
