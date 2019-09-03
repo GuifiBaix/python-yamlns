@@ -63,7 +63,7 @@ datetime.date(2015,9,23)
 
 ```python
 >>> template = (
-... 	"{client.name} {client.midname[0]}. {client.surname} buys {item.name} "
+...     "{client.name} {client.midname[0]}. {client.surname} buys {item.name} "
 ...     "by {item.price.amount:0.02f} {item.price.coin}."
 ... )
 ...
@@ -99,4 +99,28 @@ John A. Doe buys Apples by 30.00 dollars.
 nstemplate apply <template> <yamlfile> <output>
 nstemplate extract <template> <yamlskeleton>
 ```
+
+## Testing structures
+
+```python
+class MyTest(unittest.TestCase):
+
+    from yamlns.testutils import assertNsEqual
+
+    def test(self):
+        data = dict((letter, i) for i,letter in enumerate('murcielago'))
+        self.assertNsEqual(data, """\
+            a: 7
+            c: 3
+            e: 5
+            g: 8
+            i: 4
+            l: 6
+            m: 0
+            o: 9
+            r: 2
+            u: 1
+        """)
+```
+
 
