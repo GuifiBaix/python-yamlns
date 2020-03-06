@@ -6,6 +6,7 @@ from collections import OrderedDict
 import decimal
 import datetime
 from . import dateutils
+import numpy
 
 
 def text(data):
@@ -138,6 +139,8 @@ class NamespaceYamlDumper(yaml.SafeDumper):
 			decimal.Decimal, NamespaceYamlDumper.represent_float)
 		self.add_representer(
 			dateutils.Date, NamespaceYamlDumper.represent_date)
+		self.add_representer(
+			numpy.ndarray, NamespaceYamlDumper.represent_np)
 
 	def represent_date(self, data):
 		return self.represent_scalar('tag:yaml.org,2002:timestamp', str(data))
@@ -162,6 +165,9 @@ class NamespaceYamlDumper(yaml.SafeDumper):
 			if '.' not in value and 'e' in value:
 				value = value.replace('e', '.0e', 1)
 		return self.represent_scalar('tag:yaml.org,2002:float', value)
+
+	def represent_np(self, data):
+		return self.represent_sequence('tag:yaml.org,2002:seq', [float(x) for x in data])
 
 
 	# Kludge: This is a rewritten version of yaml.representer.Representer.represent_mapping
