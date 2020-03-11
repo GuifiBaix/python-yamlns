@@ -6,7 +6,14 @@ from collections import OrderedDict
 import decimal
 import datetime
 from . import dateutils
-from pathlib2 import Path
+try:
+	from pathlib2 import Path
+except ImportError:
+	try:
+		from pathlib import Path
+	except ImportError:
+		Paht = None
+
 try:
 	import numpy as np
 except ImportError:
@@ -101,8 +108,12 @@ class namespace(OrderedDict) :
 		if filename is None:
 			return dumpit(filename)
 
+		if not Path:
+			with open(filename, 'w') as f :
+				return dumpit(f)
+
 		with Path(filename).open('w') as f :
-			dumpit(f)
+			return dumpit(f)
 
 	@classmethod
 	def fromTemplateVars(clss, templateContent):
