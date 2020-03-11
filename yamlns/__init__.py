@@ -6,7 +6,10 @@ from collections import OrderedDict
 import decimal
 import datetime
 from . import dateutils
-import numpy
+try:
+	import numpy as np
+except ImportError:
+	np=None
 
 
 def text(data):
@@ -137,8 +140,9 @@ class NamespaceYamlDumper(yaml.SafeDumper):
 			decimal.Decimal, NamespaceYamlDumper.represent_float)
 		self.add_representer(
 			dateutils.Date, NamespaceYamlDumper.represent_date)
-		self.add_representer(
-			numpy.ndarray, NamespaceYamlDumper.represent_np)
+		if np:
+			self.add_representer(
+				np.ndarray, NamespaceYamlDumper.represent_np)
 
 	def represent_date(self, data):
 		return self.represent_scalar('tag:yaml.org,2002:timestamp', str(data))
