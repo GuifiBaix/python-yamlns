@@ -4,7 +4,7 @@
 from yamlns import namespace
 import decimal
 from yamlns import dateutils
-
+from yamlns import Path
 
 import unittest
 
@@ -201,6 +201,21 @@ class Namespace_Test(unittest.TestCase) :
 			f.write(data)
 		try:
 			result = namespace.load("test.yaml")
+			self.assertEqual(result,
+				namespace(hi=u'caña'))
+		except: raise
+		finally:
+			import os
+			os.unlink("test.yaml")
+
+	@unittest.skipIf(not Path, "neither pathlib or pathlib2 not installed")
+	def test_load_fromPath(self):
+		data = u"hi: caña\n"
+		import codecs
+		with codecs.open("test.yaml",'w',encoding='utf-8') as f:
+			f.write(data)
+		try:
+			result = namespace.load(Path("test.yaml"))
 			self.assertEqual(result,
 				namespace(hi=u'caña'))
 		except: raise

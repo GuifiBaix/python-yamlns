@@ -87,6 +87,9 @@ class namespace(OrderedDict) :
 
 		if hasattr(inputfile, 'read') :
 			return yaml.load(stream=inputfile, Loader=NamespaceYAMLLoader)
+		if Path:
+			with Path(inputfile).open() as f:
+				return yaml.load(stream=f, Loader=NamespaceYAMLLoader)
 		with open(inputfile) as f:
 			return yaml.load(stream=f, Loader=NamespaceYAMLLoader)
 
