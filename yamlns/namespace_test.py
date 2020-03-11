@@ -222,6 +222,22 @@ class Namespace_Test(unittest.TestCase) :
 			os.unlink("test.yaml")
 
 
+	def test_dump_toPath(self):
+		data = namespace(otra=u'caña')
+		from pathlib2 import Path
+		data.dump(Path('test.yaml'))
+		try:
+			import codecs
+			with codecs.open("test.yaml",encoding='utf-8') as f:
+				result = f.read()
+			self.assertEqual(result, u"otra: caña\n")
+		except: raise
+		finally:
+			import os
+			os.unlink("test.yaml")
+
+
+
 if __name__ == '__main__':
 	unittest.main()
 

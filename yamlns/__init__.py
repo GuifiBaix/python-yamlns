@@ -6,6 +6,7 @@ from collections import OrderedDict
 import decimal
 import datetime
 from . import dateutils
+from pathlib2 import Path
 try:
 	import numpy as np
 except ImportError:
@@ -100,7 +101,7 @@ class namespace(OrderedDict) :
 		if filename is None:
 			return dumpit(filename)
 
-		with open(filename, 'w') as f :
+		with Path(filename).open('w') as f :
 			dumpit(f)
 
 	@classmethod
