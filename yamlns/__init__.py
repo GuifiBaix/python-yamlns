@@ -81,9 +81,9 @@ class namespace(OrderedDict) :
 
 	def dump(self, filename=None) :
 
-		def dumpit(afile) :
+		def dumpit(stream) :
 
-			return yaml.dump(self, stream=afile,
+			return yaml.dump(self, stream=stream,
 				default_flow_style=False,
 				allow_unicode=True,
 				Dumper = NamespaceYamlDumper,
