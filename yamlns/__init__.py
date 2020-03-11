@@ -22,8 +22,6 @@ class namespace(OrderedDict) :
 
 	def __init__(self, *args, **kwd) :
 		super(namespace, self).__init__(*args, **kwd)
-#		self.update(self.__dict__)
-#		self.__dict__ = self
 
 	def __getattr__(self, name):
 		try:
