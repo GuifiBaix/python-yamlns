@@ -1,5 +1,11 @@
 # Change Log
 
+## yamlns 0.8
+
+- CVE-2020-1747 PyYAML RCE
+- Dumping numpy arrays (loading not yet supported)
+- Pathlib support
+
 ## yamlns 0.7
 
 - Added yamlns.testutils.assertNsEqual
