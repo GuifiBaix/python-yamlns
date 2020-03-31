@@ -17,7 +17,7 @@ setup(
 		'yamlns/nstemplate.py',
 		],
 	install_requires=[
-		'PyYAML',
+		'PyYAML>=5.3.1', # security
 		'nose',
 		'rednose',
 	],
