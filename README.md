@@ -1,7 +1,6 @@
 # yamlns.namespace
 
-[![Build Status](https://travis-ci.org/GuifiBaix/python-yamlns.svg?branch=master)
-	](https://travis-ci.org/GuifiBaix/python-yamlns)
+[![Build Status](https://travis-ci.org/GuifiBaix/python-yamlns.svg?branch=master)](https://travis-ci.org/GuifiBaix/python-yamlns)
 
 An ordered dictionary whose values can be accessed
 either as items or as attributes,
