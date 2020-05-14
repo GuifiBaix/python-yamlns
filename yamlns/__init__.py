@@ -160,7 +160,7 @@ class NamespaceYamlDumper(yaml.SafeDumper):
 				np.ndarray, NamespaceYamlDumper.represent_np)
 
 	def represent_date(self, data):
-		return self.represent_scalar('tag:yaml.org,2002:timestamp', str(data))
+		return self.represent_scalar('tag:yaml.org,2002:timestamp', type(u'')(data))
 
 	def represent_float(self, data):
 		if data != data or (data == 0.0 and data == 1.0):
@@ -171,7 +171,7 @@ class NamespaceYamlDumper(yaml.SafeDumper):
 			value = '-.inf'
 		else:
 # Here previous version called repr
-			value = str(data).lower()
+			value = type(u'')(data).lower()
 			# Note that in some cases `repr(data)` represents a float number
 			# without the decimal parts.  For instance:
 			#   >>> repr(1e17)
