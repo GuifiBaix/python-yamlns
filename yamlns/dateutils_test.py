@@ -178,7 +178,7 @@ class DateUtils_Test(unittest.TestCase):
 		aDate = Date.today()
 		self.assertEqual(
 			aDate.isoDate,
-			str(datetime.date.today()))
+			u'{}'.format(datetime.date.today()))
 
 class Period_Test(unittest.TestCase):
 

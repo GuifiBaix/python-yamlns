@@ -3,6 +3,7 @@
 
 import datetime
 
+_text = type(u'')
 
 def date(*adate):
 	"""Transforms almost anything into a datetime.date"""
@@ -14,7 +15,7 @@ def slashDate(adate) :
 
 def isoDate(adate) :
 	"""Turns a date in almost any format into a iso formated date string"""
-	return str(Date(adate))
+	return _text(Date(adate))
 
 def compactDate(adate) :
 	"""Turns a date in almost any format into a iso formated date string"""
@@ -80,10 +81,12 @@ class Date(datetime.date) :
 
 	@property
 	def isoDate(self):
-		return str(self)
+		return _text(self)
+
 	@property
 	def slashDate(self):
 		return self.strftime("%d/%m/%Y")
+
 	@property
 	def catalanDate(self):
 		monthNames= (
@@ -93,6 +96,7 @@ class Date(datetime.date) :
 		monthName = monthNames[self.month-1]
 		de = "d'" if monthName[0] in 'aeiou' else 'de '
 		return "{} {}{}".format(self.day, de, monthName)
+
 	@property
 	def spanishDate(self):
 		monthNames=(
