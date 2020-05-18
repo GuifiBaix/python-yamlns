@@ -3,6 +3,7 @@
 ## yamlns 0.8.1
 
 - Python3 fixes
+- Removed rst README, setuptools supports markdown
 
 ## yamlns 0.8
 

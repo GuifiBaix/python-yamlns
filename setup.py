@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 
-readme = open("README.rst").read()
+readme = open("README.md").read()
 
 setup(
 	name = "yamlns",
@@ -11,12 +11,14 @@ setup(
 	author_email = "voki@canvoki.net",
 	url = 'https://github.com/GuifiBaix/python-yamlns',
 	long_description = readme,
+	long_description_content_type = 'text/markdown',
 	license = 'GNU General Public License v3 or later (GPLv3+)',
 	packages=find_packages(exclude=['*_[tT]est*']),
 	scripts=[
 		'yamlns/nstemplate.py',
 		],
 	install_requires=[
+		'setuptools>=20.4', # markdown readme
 		'PyYAML>=5.3.1', # security
 		'nose',
 		'rednose',
