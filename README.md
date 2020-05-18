@@ -9,7 +9,7 @@ like in Javascript Objects but with Pythonic sugar and YAML I/O.
 It also provides some goodies:
 
 - Direct mapping to YAML using `dump()` and `load()` methods.
-- There are several convenient variations from the YAML specs in the way value types are mapped between YAML and Python:
+- Convenient variations from the pure YAML specs on how value types are mapped between YAML and Python:
     - Inner YAML mappings (`dict`s) are loaded as `namespace`s as well instead of Python `dict`.
     - Namespaces preserve the insertion order, as they are based on `odict`.
       This way the insertion order and the order in the original loaded file is preserved when stored.
@@ -18,11 +18,11 @@ It also provides some goodies:
     - YAML dates are maped to an extension of `datetime.date` which provides output formats as attributes
       which are convenient to call in `format` templates.
 - Tools to `format` templates with complex namespace structures.
-    - Given the attribute like access `format` templates result cleaner.
-    - API to fill a `format` template like file with a YAML one.
+    - Given the attribute like access, `format` templates result cleaner.
+    - API to fill a `format` template like file with a YAML file.
     - API to extract an empty YAML scheletton given a template with substitutions.
     - Command line tool to make those two functions
-
+- `unittest` assertion `assertNsEqual` to compare json like structures among them or with yaml strings.
 
 
 ## Example
