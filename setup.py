@@ -5,7 +5,7 @@ readme = open("README.rst").read()
 
 setup(
 	name = "yamlns",
-	version = "0.8",
+	version = "0.8.1",
 	description = "YAML serializable dictionary with dual item and attribute accessors",
 	author = "David Garcia Garzon",
 	author_email = "voki@canvoki.net",
@@ -23,7 +23,6 @@ setup(
 	],
 	include_package_data = True,
 	test_suite = 'yamlns',
-#	test_runner = 'colour_runner.runner.ColourTextTestRunner',
 	classifiers = [
 		'Programming Language :: Python',
 		'Programming Language :: Python :: 3',

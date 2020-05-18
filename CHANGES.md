@@ -1,5 +1,9 @@
 # Change Log
 
+## yamlns 0.8.1
+
+- Python3 fixes
+
 ## yamlns 0.8
 
 - CVE-2020-1747 PyYAML RCE
