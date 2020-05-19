@@ -12,7 +12,7 @@ except ImportError:
 	try:
 		from pathlib import Path
 	except ImportError:
-		Paht = None
+		Path = None
 
 try:
 	import numpy as np

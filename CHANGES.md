@@ -1,5 +1,9 @@
 # Change Log
 
+## yamlns 0.8.2
+
+- Fix: working on Py2 installs without Pathlib2
+
 ## yamlns 0.8.1
 
 - Python3 fixes
