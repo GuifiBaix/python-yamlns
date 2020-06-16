@@ -1,6 +1,7 @@
 # yamlns.namespace
 
 [![Build Status](https://travis-ci.org/GuifiBaix/python-yamlns.svg?branch=master)](https://travis-ci.org/GuifiBaix/python-yamlns)
+[![Coverage Status](https://coveralls.io/repos/github/GuifiBaix/python-yamlns/badge.svg?branch=master)](https://coveralls.io/github/GuifiBaix/python-yamlns?branch=master)
 
 An ordered dictionary whose values can be accessed
 either as items or as attributes,
