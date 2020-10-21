@@ -3,6 +3,7 @@
 
 from yamlns import namespace
 import decimal
+import datetime
 from yamlns import dateutils
 from yamlns import Path
 
@@ -161,14 +162,74 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(type(ns.adate),
 			dateutils.Date)
 
-	def test_dump_date(self):
+	class tzoffset(datetime.tzinfo):
+		def __init__(self, name=None, *args, **kwds):
+			self._offset = datetime.timedelta(*args, **kwds)
+			self._name = name
+		def utcoffset(self, dt):
+			return self._offset
+		def dst(self):
+			return datetime.timedelta(0)
+		def tzname(self):
+			return self._name
+
+
+	def test_dump_datetime(self):
 		yamlcontent = (
-			"adate: 2000-02-28\n"
+			"adate: 2000-02-28 10:20:30.000040+02:00\n"
 			)
 		ns = namespace()
-		ns.adate = dateutils.Date(2000,2,28)
+		ns.adate = datetime.datetime(2000,02,28,10,20,30,40, self.tzoffset(hours=2))
 		self.assertEqual(ns.dump(),
 			yamlcontent)
+
+	def test_dump_datetime_utc(self):
+		yamlcontent = (
+			"adate: 2000-02-28 10:20:30.000040+00:00\n"
+			)
+		ns = namespace()
+		ns.adate = datetime.datetime(2000,02,28,10,20,30,40, self.tzoffset(hours=0))
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+	def test_dump_datetime_naive(self):
+		yamlcontent = (
+			"adate: 2000-02-28 10:20:30.000040\n"
+			)
+		ns = namespace()
+		ns.adate = datetime.datetime(2000,02,28,10,20,30,40)
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+	def test_load_datetime(self):
+		yamlcontent = (
+			"adate: 2000-02-28 10:20:30.000040+02:00\n"
+			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(type(ns.adate),
+			datetime.datetime)
+		self.assertEqual(ns.adate,
+			datetime.datetime(2000,02,28,10,20,30,40, self.tzoffset(hours=2)))
+
+	def test_load_datetime_utc(self):
+		yamlcontent = (
+			"adate: 2000-02-28 10:20:30.000040Z\n"
+			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(type(ns.adate),
+			datetime.datetime)
+		self.assertEqual(ns.adate,
+			datetime.datetime(2000,02,28,10,20,30,40, self.tzoffset(hours=0)))
+
+	def test_load_datetime_naive(self):
+		yamlcontent = (
+			"adate: 2000-02-28 10:20:30.000040\n"
+			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(type(ns.adate),
+			datetime.datetime)
+		self.assertEqual(ns.adate,
+			datetime.datetime(2000,02,28,10,20,30,40))
 
 	def test_dir_withNonExistingAttributes(self):
 		ns = namespace()
