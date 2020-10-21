@@ -1,5 +1,9 @@
 # Change Log
 
+## yamlns 0.8.3
+
+- Fix: datetimes were loaded as dates. Closes #2
+
 ## yamlns 0.8.2
 
 - Fix: working on Py2 installs without Pathlib2
