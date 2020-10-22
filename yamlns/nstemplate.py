@@ -2,6 +2,14 @@
 
 import yamlns
 import sys
+from io import open # Py2 compat
+
+def _u(x, encoding='utf8'):
+	if type(x) == type(u''):
+		return x
+	if type(x) == type(b''):
+		return x.decode(encoding)
+	return type(u'')(x)
 
 def templateVarsAsYaml(content):
 	ns = yamlns.namespace.fromTemplateVars(content)
@@ -14,17 +22,17 @@ def apply(yamlfile, template, output, encoding='utf-8') :
 		content = f.read()
 	result = content.format(**yaml)
 	with open(output, 'w', encoding=encoding) as f :
-		f.write(result)
+		f.write(_u(result,encoding))
 
 def extract(input_template, output_yaml, encoding='utf-8') :
 	with open(input_template, encoding=encoding) as f :
 		content = f.read()
 	ns = yamlns.namespace.fromTemplateVars(content)
 	with open(output_yaml, 'w') as f :
-		f.write(ns.dump())
+		f.write(_u(ns.dump(), encoding))
 
 
-def main(args=sys.argv) :
+def main(args=sys.argv) : # pragma: no cover
 	import argparse
 
 	parser = argparse.ArgumentParser(
@@ -85,7 +93,7 @@ def main(args=sys.argv) :
 	return -1
 
 
-if __name__  == '__main__' :
+if __name__  == '__main__': # pragma: no cover
 	sys.exit(main())
 
 
