@@ -179,7 +179,7 @@ class Namespace_Test(unittest.TestCase) :
 			"adate: 2000-02-28 10:20:30.000040+02:00\n"
 			)
 		ns = namespace()
-		ns.adate = datetime.datetime(2000,02,28,10,20,30,40, self.tzoffset(hours=2))
+		ns.adate = datetime.datetime(2000,2,28,10,20,30,40, self.tzoffset(hours=2))
 		self.assertEqual(ns.dump(),
 			yamlcontent)
 
@@ -188,7 +188,7 @@ class Namespace_Test(unittest.TestCase) :
 			"adate: 2000-02-28 10:20:30.000040+00:00\n"
 			)
 		ns = namespace()
-		ns.adate = datetime.datetime(2000,02,28,10,20,30,40, self.tzoffset(hours=0))
+		ns.adate = datetime.datetime(2000,2,28,10,20,30,40, self.tzoffset(hours=0))
 		self.assertEqual(ns.dump(),
 			yamlcontent)
 
@@ -197,7 +197,7 @@ class Namespace_Test(unittest.TestCase) :
 			"adate: 2000-02-28 10:20:30.000040\n"
 			)
 		ns = namespace()
-		ns.adate = datetime.datetime(2000,02,28,10,20,30,40)
+		ns.adate = datetime.datetime(2000,2,28,10,20,30,40)
 		self.assertEqual(ns.dump(),
 			yamlcontent)
 
