@@ -298,9 +298,9 @@ class Namespace_Test(unittest.TestCase) :
 			os.unlink("test.yaml")
 
 
+	@unittest.skipIf(not Path, "neither pathlib or pathlib2 not installed")
 	def test_dump_toPath(self):
 		data = namespace(otra=u'caña')
-		from pathlib2 import Path
 		data.dump(Path('test.yaml'))
 		try:
 			import codecs
