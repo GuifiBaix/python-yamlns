@@ -209,7 +209,7 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(type(ns.adate),
 			datetime.datetime)
 		self.assertEqual(ns.adate,
-			datetime.datetime(2000,02,28,10,20,30,40, self.tzoffset(hours=2)))
+			datetime.datetime(2000,2,28,10,20,30,40, self.tzoffset(hours=2)))
 
 	def test_load_datetime_utc(self):
 		yamlcontent = (
@@ -219,7 +219,7 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(type(ns.adate),
 			datetime.datetime)
 		self.assertEqual(ns.adate,
-			datetime.datetime(2000,02,28,10,20,30,40, self.tzoffset(hours=0)))
+			datetime.datetime(2000,2,28,10,20,30,40, self.tzoffset(hours=0)))
 
 	def test_load_datetime_naive(self):
 		yamlcontent = (
@@ -229,7 +229,7 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(type(ns.adate),
 			datetime.datetime)
 		self.assertEqual(ns.adate,
-			datetime.datetime(2000,02,28,10,20,30,40))
+			datetime.datetime(2000,2,28,10,20,30,40))
 
 	def test_dir_withNonExistingAttributes(self):
 		ns = namespace()
