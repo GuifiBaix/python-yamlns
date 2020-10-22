@@ -30,7 +30,7 @@ class NSTemplate_test(unittest.TestCase) :
 			'boo',
 			])
 
-	def test_collectVars_withVar(self) :
+	def test_collectVars_withManyVarsInALine(self) :
 		content = "b{boo}o{far}34"
 		result = yamlns._collectVars(content)
 		self.assertEqual(result,[
@@ -39,20 +39,17 @@ class NSTemplate_test(unittest.TestCase) :
 			])
 
 	def test_collectVars_multiline(self) :
-		content = "b{boo}o{far}34\ndfs{nice}"
+		content = "b{boo}o\ndfs{nice}"
 		result = yamlns._collectVars(content)
 		self.assertEqual(result,[
 			'boo',
-			'far',
 			'nice',
 			])
 
 	def test_collectVars_indexinDroped(self) :
-		content = "b{boo}o{far}34\ndfs{nice[3]}"
+		content = "dfs{nice[3]}"
 		result = yamlns._collectVars(content)
 		self.assertEqual(result,[
-			'boo',
-			'far',
 			'nice',
 			])
 
