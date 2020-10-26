@@ -5,8 +5,6 @@ import sys
 from io import open # Py2 compat
 
 def _u(x, encoding='utf8'):
-	if type(x) == type(u''):
-		return x
 	if type(x) == type(b''):
 		return x.decode(encoding)
 	return type(u'')(x)
