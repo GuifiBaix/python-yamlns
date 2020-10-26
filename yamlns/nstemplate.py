@@ -9,11 +9,6 @@ def _u(x, encoding='utf8'):
 		return x.decode(encoding)
 	return type(u'')(x)
 
-def templateVarsAsYaml(content):
-	ns = yamlns.namespace.fromTemplateVars(content)
-	return ns.dump()
-
-
 def apply(yamlfile, template, output, encoding='utf-8') :
 	yaml = yamlns.namespace.load(yamlfile)
 	with open(template, encoding=encoding) as f :
