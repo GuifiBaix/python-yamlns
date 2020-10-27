@@ -6,7 +6,7 @@ import decimal
 import datetime
 from yamlns import dateutils
 from yamlns import Path
-
+import math
 import unittest
 
 class Namespace_Test(unittest.TestCase) :
@@ -126,6 +126,8 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(result,
 			namespace(hi=u'caña'))
 
+	# Numbers (int, decimal, float)
+
 	def test_load_decimal(self) :
 		yamlcontent = (
 			"decimal: 3.41"
@@ -136,23 +138,79 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(ns.decimal,
 			decimal.Decimal('3.41'))
 
-	def test_dump_float(self) :
+	def test_load_decimal_negative(self) :
 		yamlcontent = (
-			"decimal: 3.41\n"
+			"decimal: -3.41"
 			)
+		ns = namespace.loads(yamlcontent)
+		self.assertEqual(type(ns.decimal),
+			decimal.Decimal)
+		self.assertEqual(ns.decimal,
+			decimal.Decimal('-3.41'))
+
+	def test_load_decimal_infinite(self) :
+		ns = namespace.loads(
+			"decimal: -.inf"
+		)
+		self.assertEqual(type(ns.decimal),
+			float)
+		# Why not decimal?
+		self.assertEqual(ns.decimal,
+			float("-inf"))
+
+	def test_load_decimal_notANumber(self) :
+		ns = namespace.loads(
+			"decimal: .nan"
+		)
+		self.assertEqual(type(ns.decimal),
+			float)
+		# Why not decimal?
+		self.assertTrue(math.isnan(ns.decimal) )
+
+	def test_dump_decimal_inf(self) :
+		ns = namespace()
+		ns.decimal = decimal.Decimal('-inf')
+		self.assertEqual(ns.dump(),
+			"decimal: -.inf\n"
+		)
+
+	def test_dump_float(self) :
 		ns = namespace()
 		ns.decimal = 3.41
 		self.assertEqual(ns.dump(),
-			yamlcontent)
+			"decimal: 3.41\n"
+		)
+
+	def test_dump_float_inf(self) :
+
+		ns = namespace()
+		ns.decimal = float('-inf')
+		self.assertEqual(ns.dump(),
+			"decimal: -.inf\n"
+		)
 
 	def test_dump_decimal(self) :
-		yamlcontent = (
-			"decimal: 3.41\n"
-			)
 		ns = namespace()
 		ns.decimal = decimal.Decimal('3.41')
 		self.assertEqual(ns.dump(),
-			yamlcontent)
+			"decimal: 3.41\n"
+		)
+
+	def test_dump_float_nan(self):
+		ns = namespace()
+		ns.decimal = float('nan')
+		self.assertEqual(ns.dump(),
+			"decimal: .nan\n"
+		)
+
+	def test_dump_decimal_nan(self):
+		ns = namespace()
+		ns.decimal = decimal.Decimal('nan')
+		self.assertEqual(ns.dump(),
+			"decimal: .nan\n"
+		)
+
+	# Dates, times
 
 	def test_load_date(self):
 		yamlcontent = (
@@ -231,10 +289,12 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(ns.adate,
 			datetime.datetime(2000,2,28,10,20,30,40))
 
+	# dir just for values accessible as attribute
+
 	def test_dir_withNonExistingAttributes(self):
 		ns = namespace()
 		ns.attr1 = 'value1'
-		self.assertFalse('bad' in dir(ns))
+		self.assertTrue('bad' not in dir(ns))
 
 	def test_dir_withExistingAttributes(self):
 		ns = namespace()
@@ -245,7 +305,9 @@ class Namespace_Test(unittest.TestCase) :
 		ns = namespace()
 		ns['a-b'] = 'value1'
 
-		self.assertFalse('a-b' in dir(ns))
+		self.assertTrue('a-b' not in dir(ns))
+
+	# Other
 
 	def test_load_recursiveArray(self):
 		ns = namespace.loads(
@@ -296,7 +358,6 @@ class Namespace_Test(unittest.TestCase) :
 		finally:
 			import os
 			os.unlink("test.yaml")
-
 
 	@unittest.skipIf(not Path, "neither pathlib or pathlib2 not installed")
 	def test_dump_toPath(self):
