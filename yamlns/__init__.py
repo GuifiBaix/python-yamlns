@@ -262,7 +262,6 @@ class NamespaceYAMLLoader(yaml.SafeLoader):
 		result = super(NamespaceYAMLLoader,self).construct_yaml_timestamp(node)
 		if not isinstance(result, datetime.datetime):
 			return dateutils.Date(result)
-		print(type(result))
 		return result
 
 	def construct_mapping(self, node, deep=False):
