@@ -101,21 +101,25 @@ class namespace(OrderedDict) :
 				default_flow_style=False,
 				allow_unicode=True,
 				Dumper = NamespaceYamlDumper,
-				)
+			)
+
+		# TODO: Test None (stdout)
+		if filename is None:
+			return dumpit(filename)
 
 		# TODO: Test file
 		if hasattr(filename,'write') :
 			return dumpit(filename)
 
-		# TODO: Test None
-		if filename is None:
-			return dumpit(filename)
+		import sys
+		mode = 'wb' if sys.version_info[0] == 2 else 'w'
 
+		from io import open
 		if not Path:
-			with open(filename, 'w') as f :
+			with open(filename, mode) as f :
 				return dumpit(f)
 
-		with Path(filename).open('w') as f :
+		with Path(filename).open(mode) as f :
 			return dumpit(f)
 
 	@classmethod

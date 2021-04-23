@@ -8,8 +8,31 @@ import decimal
 import datetime
 import math
 import unittest
+import io
+import sys
 
 class Namespace_Test(unittest.TestCase) :
+
+	def setUp(self):
+		''
+
+	def tearDown(self):
+		import os
+		try:
+			os.unlink('test.yaml')
+		except:
+			pass
+
+	def assertContent(self, expected):
+		import io
+		with io.open("test.yaml", encoding='utf-8') as f:
+			result = f.read()
+		self.assertEqual(result, expected)
+
+	def writeFile(self, data):
+		import io
+		with io.open("test.yaml",'w',encoding='utf-8') as f:
+			f.write(data)
 
 	def test_construction_default(self):
 		ns = namespace()
@@ -406,62 +429,66 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(ns,
 			namespace(list=[namespace(key1='value1')]))
 
-	def test_load_fromFile(self):
-		data = u"hi: caña\n"
-		import codecs
-		with codecs.open("test.yaml",'w',encoding='utf-8') as f:
-			f.write(data)
-		try:
-			result = namespace.load("test.yaml")
-			self.assertEqual(result,
-				namespace(hi=u'caña'))
-		except: raise
-		finally:
-			import os
-			os.unlink("test.yaml")
+	# Sources an targets
+
+	def test_load_fromFilename(self):
+		self.writeFile(u"hi: caña\n")
+		result = namespace.load("test.yaml")
+		self.assertEqual(result,
+			namespace(hi=u'caña'))
+
+	def test_dump_toFileName(self):
+		data = namespace(otra=u'caña')
+		data.dump('test.yaml')
+		self.assertContent(u"otra: caña\n")
+
 
 	@unittest.skipIf(not Path, "neither pathlib or pathlib2 not installed")
 	def test_load_fromPath(self):
-		data = u"hi: caña\n"
-		import codecs
-		with codecs.open("test.yaml",'w',encoding='utf-8') as f:
-			f.write(data)
-		try:
-			result = namespace.load(Path("test.yaml"))
-			self.assertEqual(result,
-				namespace(hi=u'caña'))
-		except: raise
-		finally:
-			import os
-			os.unlink("test.yaml")
-
-	def test_dump_toFile(self):
-		data = namespace(otra=u'caña')
-		data.dump('test.yaml')
-		try:
-			import codecs
-			with codecs.open("test.yaml",encoding='utf-8') as f:
-				result = f.read()
-			self.assertEqual(result, u"otra: caña\n")
-		except: raise
-		finally:
-			import os
-			os.unlink("test.yaml")
+		self.writeFile(u"hi: caña\n")
+		result = namespace.load(Path("test.yaml"))
+		self.assertEqual(result,
+			namespace(hi=u'caña'))
 
 	@unittest.skipIf(not Path, "neither pathlib or pathlib2 not installed")
 	def test_dump_toPath(self):
 		data = namespace(otra=u'caña')
 		data.dump(Path('test.yaml'))
-		try:
-			import codecs
-			with codecs.open("test.yaml",encoding='utf-8') as f:
-				result = f.read()
-			self.assertEqual(result, u"otra: caña\n")
-		except: raise
-		finally:
-			import os
-			os.unlink("test.yaml")
+		self.assertContent(u"otra: caña\n")
 
+	@unittest.skipIf(sys.version_info[0]>2,
+		"PyYaml in Python 3 requires a text file")
+	def test_load_fromBinaryFileObject(self):
+		self.writeFile(u"hi: caña\n")
+		with io.open('test.yaml', 'rb') as f:
+			result = namespace.load(f)
+		self.assertEqual(result,
+			namespace(hi=u'caña'))
+
+	@unittest.skipIf(sys.version_info[0]>2,
+		"PyYaml in Python 3 requires a text file")
+	def test_dump_toBinaryFileObject(self):
+		data = namespace(otra=u'caña')
+		with io.open('test.yaml', 'wb') as f:
+			data.dump(f)
+		self.assertContent(u"otra: caña\n")
+
+	@unittest.skipIf(sys.version_info[0]==2,
+		"PyYaml in Python 2 requires a binary file")
+	def test_load_fromTextFileObject(self):
+		self.writeFile(u"hi: caña\n")
+		with io.open('test.yaml', 'r', encoding='utf8') as f:
+			result = namespace.load(f)
+		self.assertEqual(result,
+			namespace(hi=u'caña'))
+
+	@unittest.skipIf(sys.version_info[0]==2,
+		"PyYaml in Python 2 requires a binary file")
+	def test_dump_toTextFileObject(self):
+		data = namespace(otra=u'caña')
+		with io.open('test.yaml','w', encoding='utf8') as f:
+			data.dump(f)
+		self.assertContent(u"otra: caña\n")
 
 
 if __name__ == '__main__':
