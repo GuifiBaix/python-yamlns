@@ -307,6 +307,79 @@ class Namespace_Test(unittest.TestCase) :
 
 		self.assertTrue('a-b' not in dir(ns))
 
+	# multiline strings
+
+	def test_dump_multiline(self):
+		ns = namespace(text="line\nsecond line", other=2)
+		self.assertMultiLineEqual(ns.dump(),
+			"text: |-\n"
+			"  line\n"
+			"  second line\n"
+			"other: 2\n"
+		)
+
+	def test_dump_multiline_innnerIndentation(self):
+		ns = namespace(text="line\n  second line", other=2)
+		self.assertMultiLineEqual(ns.dump(),
+			"text: |-\n"
+			"  line\n"
+			"    second line\n"
+			"other: 2\n"
+		)
+
+	def test_dump_multiline_firstLineIndentation(self):
+		ns = namespace(text="  line\nsecond line", other=2)
+		self.assertMultiLineEqual(ns.dump(),
+			"text: |2-\n"
+			"    line\n"
+			"  second line\n"
+			"other: 2\n"
+		)
+
+	def test_dump_multiline_tabIndentation(self):
+		ns = namespace(text="\tline\nsecond line", other=2)
+		self.assertMultiLineEqual(ns.dump(),
+			"text: \"\\tline\\nsecond line\"\n"
+			"other: 2\n"
+		)
+
+	def test_dump_multiline_endSpaces(self):
+		ns = namespace(text="line   \nsecond line", other=2)
+		self.assertMultiLineEqual(ns.dump(),
+			"text: \"line   \\nsecond line\"\n"
+			"other: 2\n"
+		)
+
+	def test_dump_multiline_emptyLine(self):
+		ns = namespace(text="line\n\nsecond line", other=2)
+		self.assertMultiLineEqual(ns.dump(),
+			"text: |-\n"
+			"  line\n"
+			"\n"
+			"  second line\n"
+			"other: 2\n"
+		)
+
+	def test_dump_multiline_emptyAtEnd(self):
+		ns = namespace(text="line\nsecond line\n", other=2)
+		self.assertMultiLineEqual(ns.dump(),
+			"text: |\n" # this changes, was |-
+			"  line\n"
+			"  second line\n"
+			"other: 2\n"
+		)
+
+	def test_dump_multiline_manyEmptyAtEnd(self):
+		ns = namespace(text="line\nsecond line\n\n\n", other=2)
+		self.assertMultiLineEqual(ns.dump(),
+			"text: |+\n" # this changes, was |-
+			"  line\n"
+			"  second line\n"
+			"\n"
+			"\n"
+			"other: 2\n"
+		)
+
 	# Other
 
 	def test_load_recursiveArray(self):
