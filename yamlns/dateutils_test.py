@@ -301,9 +301,4 @@ class Period_Test(unittest.TestCase):
 
 
 
-if __name__ == '__main__' :
-	sys.exit(unittest.main())
-
-
-
 # vim: sw=4 ts=4 noet

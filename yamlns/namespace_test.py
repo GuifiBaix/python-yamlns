@@ -527,9 +527,4 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertContent(u"otra: caña\n")
 
 
-if __name__ == '__main__':
-	unittest.main()
-
-
-
 # vim: sw=4 ts=4 noet
