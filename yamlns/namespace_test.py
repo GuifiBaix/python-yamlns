@@ -173,6 +173,16 @@ class Namespace_Test(unittest.TestCase) :
 
 	def test_load_decimal_infinite(self) :
 		ns = namespace.loads(
+			"decimal: .inf"
+		)
+		self.assertEqual(type(ns.decimal),
+			float)
+		# Why not decimal?
+		self.assertEqual(ns.decimal,
+			float("inf"))
+
+	def test_load_decimal_minusInfinite(self) :
+		ns = namespace.loads(
 			"decimal: -.inf"
 		)
 		self.assertEqual(type(ns.decimal),
@@ -205,6 +215,14 @@ class Namespace_Test(unittest.TestCase) :
 		)
 
 	def test_dump_float_inf(self) :
+
+		ns = namespace()
+		ns.decimal = float('inf')
+		self.assertEqual(ns.dump(),
+			"decimal: .inf\n"
+		)
+
+	def test_dump_float_minusInf(self) :
 
 		ns = namespace()
 		ns.decimal = float('-inf')
