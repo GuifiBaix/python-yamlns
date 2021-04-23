@@ -310,7 +310,9 @@ class Namespace_Test(unittest.TestCase) :
 	# multiline strings
 
 	def test_dump_multiline(self):
-		ns = namespace(text="line\nsecond line", other=2)
+		ns = namespace()
+		ns.text="line\nsecond line"
+		ns.other=2
 		self.assertMultiLineEqual(ns.dump(),
 			"text: |-\n"
 			"  line\n"
@@ -319,7 +321,9 @@ class Namespace_Test(unittest.TestCase) :
 		)
 
 	def test_dump_multiline_innnerIndentation(self):
-		ns = namespace(text="line\n  second line", other=2)
+		ns = namespace()
+		ns.text="line\n  second line"
+		ns.other=2
 		self.assertMultiLineEqual(ns.dump(),
 			"text: |-\n"
 			"  line\n"
@@ -328,7 +332,9 @@ class Namespace_Test(unittest.TestCase) :
 		)
 
 	def test_dump_multiline_firstLineIndentation(self):
-		ns = namespace(text="  line\nsecond line", other=2)
+		ns = namespace()
+		ns.text="  line\nsecond line"
+		ns.other=2
 		self.assertMultiLineEqual(ns.dump(),
 			"text: |2-\n"
 			"    line\n"
@@ -337,21 +343,27 @@ class Namespace_Test(unittest.TestCase) :
 		)
 
 	def test_dump_multiline_tabIndentation(self):
-		ns = namespace(text="\tline\nsecond line", other=2)
+		ns = namespace()
+		ns.text="\tline\nsecond line"
+		ns.other=2
 		self.assertMultiLineEqual(ns.dump(),
 			"text: \"\\tline\\nsecond line\"\n"
 			"other: 2\n"
 		)
 
 	def test_dump_multiline_endSpaces(self):
-		ns = namespace(text="line   \nsecond line", other=2)
+		ns = namespace()
+		ns.text="line   \nsecond line"
+		ns.other=2
 		self.assertMultiLineEqual(ns.dump(),
 			"text: \"line   \\nsecond line\"\n"
 			"other: 2\n"
 		)
 
 	def test_dump_multiline_emptyLine(self):
-		ns = namespace(text="line\n\nsecond line", other=2)
+		ns = namespace()
+		ns.text="line\n\nsecond line"
+		ns.other=2
 		self.assertMultiLineEqual(ns.dump(),
 			"text: |-\n"
 			"  line\n"
@@ -361,7 +373,9 @@ class Namespace_Test(unittest.TestCase) :
 		)
 
 	def test_dump_multiline_emptyAtEnd(self):
-		ns = namespace(text="line\nsecond line\n", other=2)
+		ns = namespace()
+		ns.text="line\nsecond line\n"
+		ns.other=2
 		self.assertMultiLineEqual(ns.dump(),
 			"text: |\n" # this changes, was |-
 			"  line\n"
@@ -370,7 +384,9 @@ class Namespace_Test(unittest.TestCase) :
 		)
 
 	def test_dump_multiline_manyEmptyAtEnd(self):
-		ns = namespace(text="line\nsecond line\n\n\n", other=2)
+		ns = namespace()
+		ns.text="line\nsecond line\n\n\n"
+		ns.other=2
 		self.assertMultiLineEqual(ns.dump(),
 			"text: |+\n" # this changes, was |-
 			"  line\n"
