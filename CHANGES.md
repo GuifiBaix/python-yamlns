@@ -1,5 +1,9 @@
 # Change Log
 
+## yamlns 0.9.1
+
+- py2 compatible loading
+
 ## yamlns 0.9.0
 
 - Dump multiline strings verbatim (|) instead of quoted whenever possible
