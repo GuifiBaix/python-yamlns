@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
 
-from yamlns import namespace
+from . import namespace
+from . import dateutils
+from . import Path
 import decimal
 import datetime
-from yamlns import dateutils
-from yamlns import Path
 import math
 import unittest
 
