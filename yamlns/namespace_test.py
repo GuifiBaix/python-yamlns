@@ -243,6 +243,24 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(type(ns.adate),
 			dateutils.Date)
 
+	def test_dump_dateutilsdate(self):
+		yamlcontent = (
+			"adate: 2000-02-28\n"
+			)
+		ns = namespace()
+		ns.adate = dateutils.Date(2000,2,28)
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
+	def test_dump_date(self):
+		yamlcontent = (
+			"adate: 2000-02-28\n"
+			)
+		ns = namespace()
+		ns.adate = datetime.date(2000,2,28)
+		self.assertEqual(ns.dump(),
+			yamlcontent)
+
 	class tzoffset(datetime.tzinfo):
 		def __init__(self, name=None, *args, **kwds):
 			self._offset = datetime.timedelta(*args, **kwds)
