@@ -1,5 +1,12 @@
 # Change Log
 
+## yamlns 0.9.0
+
+- Dump multiline strings verbatim (|) instead of quoted whenever possible
+- Py3: removed 0 padded numbers in date tests
+- Improved coverage in templating code
+- Fix: removed a spurious trace
+
 ## yamlns 0.8.3
 
 - Fix: datetimes were loaded as dates. Closes #2
