@@ -4,12 +4,12 @@
 [![Coverage Status](https://coveralls.io/repos/github/GuifiBaix/python-yamlns/badge.svg?branch=master)](https://coveralls.io/github/GuifiBaix/python-yamlns?branch=master)
 ![PyPI](https://img.shields.io/pypi/v/yamlns)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/yamlns)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yamlns)
 
-A dictionary to conveniently access your structured data
-either as items `['attribute']` or as attributes `.attribute` 
-with direct YAML I/O.
-
-It also provides some goodies:
+An extended dictionary to conveniently access your structured data
+with direct mapping from and to YAML and other structured formats.
+Besides the item like `['field']` access, an attribute like access `.field` is provided.
+And it also provides many other goodies:
 
 - Direct mapping to YAML using `dump()` and `load()` methods.
 - Convenient variations from the pure YAML specs on how value types are mapped between YAML and Python:
@@ -22,10 +22,10 @@ It also provides some goodies:
       which are convenient to call in `format` templates.
 - Tools to `format` templates with complex namespace structures.
     - Given the attribute like access, `format` templates result cleaner with multilevel dicts.
-    - API to fill a `format` template like file with a YAML file.
-    - API to extract an empty YAML scheletton given a template with substitutions.
-    - Command line tool to make those two functions
-- `unittest` assertion `assertNsEqual` to compare json like structures among them or with yaml strings.
+    - Function to extract an empty YAML scheletton given a template with substitutions.
+    - Function to fill a `format` template like file with a YAML file.
+    - Command line tool to run those two functions 
+- `unittest` assertion `assertNsEqual` to compare json like structures among them or with yaml strings and display the difference in a nice line by line diff.
 
 
 ## Example
