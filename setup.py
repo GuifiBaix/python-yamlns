@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
+import sys
 
 readme = open("README.md").read()
 
@@ -22,7 +23,9 @@ setup(
 		'PyYAML>=5.3.1', # security
 		'nose',
 		'rednose',
-	],
+	]+ ([
+		'pathlib2',
+	] if sys.version_info < (3,) else []),
 	include_package_data = True,
 	test_suite = 'yamlns',
 	classifiers = [
