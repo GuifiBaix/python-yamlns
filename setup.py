@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 import sys
 
 readme = open("README.md").read()
+py2 = sys.sys.version_info < (3,)
 
 setup(
 	name = "yamlns",
@@ -23,9 +24,9 @@ setup(
 		'PyYAML>=5.3.1', # security
 		'nose',
 		'rednose',
-	]+ ([
-		'pathlib2',
-	] if sys.version_info < (3,) else []),
+		'pathlib2' if py2 else '',
+		'pyyaml<6' if py2 else '',
+	],
 	include_package_data = True,
 	test_suite = 'yamlns',
 	classifiers = [
