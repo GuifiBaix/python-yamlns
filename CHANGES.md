@@ -1,5 +1,10 @@
 # Change Log
 
+## yamlns 0.9.2
+
+- github actions for ci and release
+- improved test coverage
+
 ## yamlns 0.9.1
 
 - py2 compatible loading
