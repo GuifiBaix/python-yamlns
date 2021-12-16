@@ -2,11 +2,12 @@
 
 [![CI Status](https://github.com/GuifiBaix/python-yamlns/actions/workflows/main.yml/badge.svg)](https://github.com/GuifiBaix/python-yamlns/actions/workflows/main.yml)
 [![Coverage Status](https://coveralls.io/repos/github/GuifiBaix/python-yamlns/badge.svg?branch=master)](https://coveralls.io/github/GuifiBaix/python-yamlns?branch=master)
+![PyPI](https://img.shields.io/pypi/v/yamlns)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/yamlns)
 
-An ordered dictionary whose values can be accessed
-either as items or as attributes,
-like in Javascript Objects but with Pythonic sugar and YAML I/O.
+A dictionary to conveniently access your structured data
+either as items `['attribute']` or as attributes `.attribute` 
+with direct YAML I/O.
 
 It also provides some goodies:
 
@@ -20,7 +21,7 @@ It also provides some goodies:
     - YAML dates are maped to an extension of `datetime.date` which provides output formats as attributes
       which are convenient to call in `format` templates.
 - Tools to `format` templates with complex namespace structures.
-    - Given the attribute like access, `format` templates result cleaner.
+    - Given the attribute like access, `format` templates result cleaner with multilevel dicts.
     - API to fill a `format` template like file with a YAML file.
     - API to extract an empty YAML scheletton given a template with substitutions.
     - Command line tool to make those two functions
