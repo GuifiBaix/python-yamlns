@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 import sys
 
 readme = open("README.md").read()
-py2 = sys.sys.version_info < (3,)
+py2 = sys.version_info < (3,)
 
 setup(
 	name = "yamlns",
