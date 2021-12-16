@@ -21,11 +21,10 @@ setup(
 		],
 	install_requires=[
 		'setuptools>=20.4', # markdown readme
-		'PyYAML<6' if py2 else '',
-		'PyYAML>=5.3.1', # security
+		'PyYAML<6, >5.3.1' if py2 else 'PyYAML>=5.3.1', # security
 		'nose',
 		'rednose',
-		'pathlib2' if py2 else '',
+		'pathlib2' if py2 else '', # Py2 backport
 	],
 	include_package_data = True,
 	test_suite = 'yamlns',
