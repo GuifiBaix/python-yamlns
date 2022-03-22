@@ -138,8 +138,8 @@ def test__assert_ns_equal__value_differs():
     with pytest.raises(AssertionError) as exception:
         assert_ns_equal('key: result', 'key: expected')
     assert (
-        "  - key: result\n"
-        "  + key: expected"
+        "  - key: expected\n"
+        "  + key: result"
 
     ) in format(exception.value)
 
@@ -164,8 +164,8 @@ def test__assert_ns_equal__inner_values_differs():
         )
     assert (
         "    parent:\n"
-        "  -   key1: mybad\n"
-        "  +   key1: value1\n"
+        "  -   key1: value1\n"
+        "  +   key1: mybad\n"
         "      key2: value2"
     ) in format(exception.value)
 
