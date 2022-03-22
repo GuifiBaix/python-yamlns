@@ -56,9 +56,15 @@ def assert_ns_equal(data, expectation):
     Both ends can be either a dictionary like object or a yaml string.
     """
     def parse_and_normalize(x):
+        # if strings are parsed as yaml
         if type(x) in (type(u''), type('')):
             x = ns.loads(x)
-        return normalize(x).dump()
+        # the resulting ns is normalized
+        x = normalize(x)
+        if type(x) == ns:
+            return x.dump()
+        return x
+
     assert parse_and_normalize(data) == parse_and_normalize(expectation)
 
 

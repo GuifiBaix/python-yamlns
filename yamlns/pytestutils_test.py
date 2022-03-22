@@ -219,4 +219,12 @@ def test__assert_ns_equal__common_indentation_ignored():
           key2: value2
     """)
 
+def test__assert_ns_equal__float_yaml():
+    # Should not raise
+    assert_ns_equal("1.2","1.2")
+
+def test__assert_ns_equal__string_yaml():
+    # Should not raise
+    assert_ns_equal("text","other")
+
 
