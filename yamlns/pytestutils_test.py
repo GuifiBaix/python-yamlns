@@ -1,6 +1,10 @@
 from __future__ import unicode_literals
 from .pytestutils import yaml_snapshot, test_name, assert_ns_equal, normalize, Path, ns
 import pytest
+import sys
+
+py2 = sys.version_info < (3,)
+
 
 def rmrf(path):
     path = Path(path)
@@ -113,6 +117,7 @@ def test__yaml_snapshot__differentExpectation(
         "  mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
     ).format(test_name)
     assert format(exception.value)[:len(expected)] == expected
+
     assertContent(snapshotdir/'{}.result'.format(test_name),
         'snapshot: content\n'
     )
@@ -138,9 +143,11 @@ def test__assert_ns_equal__value_differs():
     with pytest.raises(AssertionError) as exception:
         assert_ns_equal('key: result', 'key: expected')
     assert (
+        "  - key: result\n"
+        "  + key: expected"
+        if py2 else
         "  - key: expected\n"
         "  + key: result"
-
     ) in format(exception.value)
 
 def test__assert_ns_equal__result_dict():
@@ -163,6 +170,11 @@ def test__assert_ns_equal__inner_values_differs():
             '  key1: value1\n'
         )
     assert (
+        "    parent:\n"
+        "  -   key1: mybad\n"
+        "  +   key1: value1\n"
+        "      key2: value2"
+        if py2 else
         "    parent:\n"
         "  -   key1: value1\n"
         "  +   key1: mybad\n"
