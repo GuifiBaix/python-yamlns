@@ -19,6 +19,11 @@ setup(
 	scripts=[
 		'yamlns/nstemplate.py',
 		],
+	entry_points=dict(
+		pytest11 = [
+			"yamlns_tests = yamlns.pytestutils",
+		],
+	),
 	install_requires=[
 		'setuptools>=20.4', # markdown readme
 		'PyYAML<6, >5.3.1' if py2 else 'PyYAML>=5.3.1', # security
@@ -33,6 +38,7 @@ setup(
 		'Programming Language :: Python :: 2',
 		'Programming Language :: Python :: 3',
 		'Topic :: Software Development :: Libraries :: Python Modules',
+		'Framework :: Pytest',
 		'Intended Audience :: Developers',
 		'Development Status :: 5 - Production/Stable',
 		'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',

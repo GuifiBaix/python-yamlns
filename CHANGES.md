@@ -1,5 +1,11 @@
 # Change Log
 
+## unreleased
+
+- pytest utils:
+  - `yaml_snapshot`: a pytest fixture that compares with previous validated execution
+  - `assert_ns_equal`: a custom assertion equivalent to `assertNsEqual` for `unittest`
+
 ## yamlns 0.9.2
 
 - github actions for ci and release
