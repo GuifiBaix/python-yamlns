@@ -79,7 +79,11 @@ def test__test_name(test_name):
 
 # yaml_snapshot fixture
 
-def test__yaml_snapshot__no_expectation(yaml_snapshot, clean_snapshotdir, test_name):
+def test__yaml_snapshot__no_expectation(
+    yaml_snapshot,
+    clean_snapshotdir,
+    test_name,
+):
     with pytest.raises(AssertionError) as exception:
         yaml_snapshot("content")
 
@@ -93,7 +97,11 @@ def test__yaml_snapshot__no_expectation(yaml_snapshot, clean_snapshotdir, test_n
     )
     assert not (clean_snapshotdir / '{}.expected'.format(test_name)).exists()
 
-def test__yaml_snapshot__differentExpectation(yaml_snapshot, snapshotdir, test_name):
+def test__yaml_snapshot__differentExpectation(
+    yaml_snapshot,
+    snapshotdir,
+    test_name,
+):
     expectation = snapshotdir / (test_name + '.expected')
     expectation.write_text("snapshot: unexpected\n", encoding='utf8')
 
