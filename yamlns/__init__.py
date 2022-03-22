@@ -297,6 +297,6 @@ class NamespaceYAMLLoader(yaml.SafeLoader):
 			mapping[key] = value
 		return mapping
 
-
+ns = namespace # alias
 
 # vim: sw=4 ts=4 noet
