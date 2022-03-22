@@ -147,11 +147,11 @@ def test__assert_ns_equal__result_dict():
     # Should not raise
     assert_ns_equal(dict(key='value'), 'key: value')
 
-def test__assert_yaml_equal__expected_dict():
+def test__assert_ns_equal__expected_dict():
     # Should not raise
     assert_ns_equal('key: value', dict(key='value'))
 
-def test__assert_yaml_equal__inner_values_differs():
+def test__assert_ns_equal__inner_values_differs():
     with pytest.raises(AssertionError) as exception:
         assert_ns_equal(
             'parent:\n'
