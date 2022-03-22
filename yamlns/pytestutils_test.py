@@ -225,6 +225,6 @@ def test__assert_ns_equal__float_yaml():
 
 def test__assert_ns_equal__string_yaml():
     # Should not raise
-    assert_ns_equal("text","other")
+    assert_ns_equal("text","text")
 
 
