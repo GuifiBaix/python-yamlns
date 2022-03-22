@@ -83,11 +83,11 @@ def test__yaml_snapshot__no_expectation(yaml_snapshot, clean_snapshotdir, test_n
     with pytest.raises(AssertionError) as exception:
         yaml_snapshot("content")
 
-    assert format(exception.value).startswith(
+    expected = (
         "First snapshot, check results and accept them with:\n"
         "  mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
-        .format(test_name)
-    )
+    ).format(test_name)
+    assert format(exception.value)[:len(expected)] == expected
     assertContent(clean_snapshotdir / '{}.result'.format(test_name),
         "snapshot: content\n"
     )
@@ -100,11 +100,11 @@ def test__yaml_snapshot__differentExpectation(yaml_snapshot, snapshotdir, test_n
     with pytest.raises(AssertionError) as exception:
         yaml_snapshot("content")
 
-    assert format(exception.value).startswith(
+    expected=(
         "Failed snapshot. Check the result and if it is ok accept it with:\n"
         "  mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
-    .format(test_name)
-    )
+    ).format(test_name)
+    assert format(exception.value)[:len(expected)] == expected
     assertContent(snapshotdir/'{}.result'.format(test_name),
         'snapshot: content\n'
     )
