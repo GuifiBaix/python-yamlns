@@ -5,6 +5,7 @@
 - pytest utils:
   - `yaml_snapshot`: a pytest fixture that compares with previous validated execution
   - `assert_ns_equal`: a custom assertion equivalent to `assertNsEqual` for `unittest`
+- `ns` alias for `namespace`
 
 ## yamlns 0.9.2
 
