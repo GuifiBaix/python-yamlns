@@ -29,6 +29,12 @@ setup(
 		'PyYAML<6, >5.3.1' if py2 else 'PyYAML>=5.3.1', # security
 		'pytest<4.7' if py2 else 'pytest',
 		'pathlib2' if py2 else '', # Py2 backport
+		'packaging<21' if py2 else '', # Py2, indirect importlib-metadata, zipp
+		'zipp<2' if py2 else '', # Py2, indirect importlib-metadata
+		'configparser<5' if py2 else '', # Py2, indirect importlib-metadata
+		'importlib-metadata<3' if py2 else '', # Py2, indirect pytest
+		'click<8' if py2 else '', # Py2, indirect pytest
+		'coverage<6' if py2 else '', # Py2, indirect pytest-cov
 	],
 	include_package_data = True,
 	test_suite = 'yamlns',
