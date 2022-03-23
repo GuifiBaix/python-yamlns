@@ -36,6 +36,7 @@ setup(
 		'click<8' if py2 else '', # Py2, indirect pytest
 		'coverage<6' if py2 else '', # Py2, indirect pytest-cov
 		'pyparsing<3' if py2 else '', # Py2, indirect packaging
+		'contextlib2<21' if py2 else '', # Py2, indirect by many libs
 	],
 	include_package_data = True,
 	test_suite = 'yamlns',
