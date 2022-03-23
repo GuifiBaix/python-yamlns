@@ -1,6 +1,6 @@
 # Change Log
 
-## unreleased
+## yamlns 0.10.0 (2022-03-23)
 
 - pytest utils:
   - `text_snapshot`: a pytest fixture that compares a text with the previous validated execution

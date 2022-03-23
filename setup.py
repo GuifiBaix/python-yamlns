@@ -7,7 +7,7 @@ py2 = sys.version_info < (3,)
 
 setup(
 	name = "yamlns",
-	version = "0.9.2",
+	version = "0.10.0",
 	description = "YAML serializable dictionary with dual item and attribute accessors",
 	author = "David Garcia Garzon",
 	author_email = "voki@canvoki.net",
