@@ -3,7 +3,8 @@
 ## unreleased
 
 - pytest utils:
-  - `yaml_snapshot`: a pytest fixture that compares with previous validated execution
+  - `text_snapshot`: a pytest fixture that compares a text with the previous validated execution
+  - `yaml_snapshot`: a pytest fixture that compares the yaml dump of the value with the previous validated execution
   - `assert_ns_equal`: a custom assertion equivalent to `assertNsEqual` for `unittest`
 - `ns` alias for `namespace`
 
