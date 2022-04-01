@@ -16,12 +16,14 @@ setup(
 	long_description_content_type = 'text/markdown',
 	license = 'GNU General Public License v3 or later (GPLv3+)',
 	packages=find_packages(exclude=['*_[tT]est*']),
-	scripts=[
-		'yamlns/nstemplate.py',
-		],
 	entry_points=dict(
+		console_scripts = [
+			'json2yaml = yamlns.json2yaml:main',
+			'nstemplate = yamlns.nstemplate:main',
+			'nstemplate.py = yamlns.nstemplate:deprecated', # backwards compatibility
+		],
 		pytest11 = [
-			"yamlns_tests = yamlns.pytestutils",
+			'yamlns_tests = yamlns.pytestutils',
 		],
 	),
 	install_requires=[

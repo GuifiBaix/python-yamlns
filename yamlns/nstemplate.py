@@ -85,6 +85,13 @@ def main(args=sys.argv) : # pragma: no cover
 	parser.print_help()
 	return -1
 
+def deprecated(): # pragma: no cover
+	print(
+		"The script nstemplate.py is deprecated. "
+		"Use nstemplate instead (without the .py extension)"
+	)
+	sys.exit(-1)
+
 
 if __name__  == '__main__': # pragma: no cover
 	sys.exit(main())

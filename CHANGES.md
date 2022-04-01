@@ -1,5 +1,11 @@
 # Change Log
 
+## unreleased
+
+- `json2yaml`: new script to have a yaml based pretty printed view on json data
+- Renamed script `nstemplate.py` as `nstemplate` (removed `.py`)
+- pytest utils documented
+
 ## yamlns 0.10.0 (2022-03-23)
 
 - pytest utils:
