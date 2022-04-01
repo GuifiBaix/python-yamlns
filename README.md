@@ -104,6 +104,7 @@ John A. Doe buys Apples by 30.00 dollars.
 ```bash
 nstemplate apply <template> <yamlfile> <output>
 nstemplate extract <template> <yamlskeleton>
+cat file.json | json2yaml > file.yaml
 ```
 
 ## Testing structures
