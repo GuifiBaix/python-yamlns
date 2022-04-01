@@ -26,6 +26,10 @@ And it also provides many other goodies:
     - Function to fill a `format` template like file with a YAML file.
     - Command line tool to run those two functions 
 - `unittest` assertion `assertNsEqual` to compare json like structures among them or with yaml strings and display the difference in a nice line by line diff.
+- `pyunit` inegration
+    - `pytestutils.assert_ns_equal`: equivalent to `assertNsEqual` to be used in pytest
+    - `pytestutils.yaml_snapshot`: fixture to detect changes estructure changes between test executions in yaml format.
+    - `pytestutils.text_snapshot`: fixture to detect changes text changes between test executions.
 
 
 ## Example
@@ -125,4 +129,59 @@ class MyTest(unittest.TestCase):
         """)
 ```
 
+## Pytest integration
+
+The following helper tools for pytest are provided:
+
+- `pytestutils.assert_ns_equal`: equivalent to `assertNsEqual` to be used in pytest
+- `pytestutils.yaml_snapshot`: fixture to detect changes estructure changes between test executions in yaml format.
+- `pytestutils.text_snapshot`: fixture to detect changes text changes between test executions.
+
+
+### `assert_ns_equal`
+
+A custom assertion that normalizes both sides into namespaces and dumps them as yaml, which is compared side by side.
+
+The normalization takes place, first if the data is a string, it is parsed as yaml.
+Then the resulting data is converted recursively into namespaces, ordering keys alfabetically.
+And finally the result is dumped as yaml to be compared line by line.
+
+```python
+from yamlns.pytestutils import assert_ns_equal
+
+def test_with_assert_ns_equal():
+    data = dict(hello='world')
+    assert_ns_equal(data, """\
+        hello: world
+    """)
+
+```
+
+### `yaml_snapshot` and `text_snapshot`
+
+`yaml_snapshot` and `text_snapshot` are fixtures available whenever you install yamlns.
+You can use it to make snapshots of data that can be compared to previous executions.
+Snapshots are stored into `testdata/snapshots/`.
+They are given a name that depends on the fully qualified name of the test.
+The ones with the `.expected` suffix are accepted snapshots,
+while the ones ending with `.result` are generated
+when the current execution does not match.
+
+If you consider the `.result` is valid, just rename it as `.expected`.
+The assert message provides you with the commandline for convenience.
+
+`text_snapshot` just dumps verbatim text while
+`yaml_snapshot` normalizes and dumps the data
+just like `assert_ns_equal` does.
+
+```python
+def test_with_yaml_snapshot(yaml_snapshot):
+    data = dict(hello='world')
+    yaml_snapshot(data)
+
+def test_with_text_snapshot(yaml_snapshot):
+    data = dict(hello='world')
+    yaml_snapshot(data)
+
+```
 
