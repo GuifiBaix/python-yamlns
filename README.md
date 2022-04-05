@@ -182,7 +182,7 @@ def test_with_yaml_snapshot(yaml_snapshot):
 
 def test_with_text_snapshot(yaml_snapshot):
     who = 'world'
-    text_snapshot('hello {who}')
+    text_snapshot('hello {}'.format(who))
 
 ```
 
