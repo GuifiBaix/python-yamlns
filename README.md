@@ -181,7 +181,7 @@ def test_with_yaml_snapshot(yaml_snapshot):
     yaml_snapshot(data)
 
 def test_with_text_snapshot(yaml_snapshot):
-    how = 'world'
+    who = 'world'
     text_snapshot('hello {who}')
 
 ```
