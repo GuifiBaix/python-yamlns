@@ -180,7 +180,7 @@ def test_with_yaml_snapshot(yaml_snapshot):
     data = dict(hello='world')
     yaml_snapshot(data)
 
-def test_with_text_snapshot(yaml_snapshot):
+def test_with_text_snapshot(text_snapshot):
     who = 'world'
     text_snapshot('hello {}'.format(who))
 
