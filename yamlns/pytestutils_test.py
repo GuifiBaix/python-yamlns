@@ -1,5 +1,14 @@
 from __future__ import unicode_literals
-from .pytestutils import yaml_snapshot, test_name, assert_ns_equal, normalize, Path, ns
+from .pytestutils import (
+    yaml_snapshot,
+    text_snapshot,
+    test_name,
+    assert_ns_equal,
+    assert_ns_contains,
+    normalize,
+    Path,
+    ns
+)
 import pytest
 import sys
 
@@ -226,5 +235,23 @@ def test__assert_ns_equal__float_yaml():
 def test__assert_ns_equal__string_yaml():
     # Should not raise
     assert_ns_equal("text","text")
+
+def test__assert_ns_contains__missingKey():
+    with pytest.raises(AssertionError) as exception:
+        assert_ns_contains(
+            ns(ignored='value'),
+            ns(missing='value')
+        )
+    assert format(exception.value) == (
+        "assert '{}\\n' == 'missing: value\\n'\n"
+        "  - missing: value\n"
+        "  + {}"
+    )
+
+def test__assert_ns_contains__equals():
+    assert_ns_contains(
+        ns(akey='value'),
+        ns(akey='value')
+    )
 
 

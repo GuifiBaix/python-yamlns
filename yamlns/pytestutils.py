@@ -63,21 +63,43 @@ def yaml_snapshot(text_snapshot):
 
     return assertion
 
+def _parse_and_normalize(x):
+    # if strings are parsed as yaml
+    if type(x) in (type(u''), type('')):
+        x = ns.loads(x)
+    # the resulting ns is normalized
+    return normalize(x)
+
+def _parse_normalize_and_dump(x):
+    x = _parse_and_normalize(x)
+    if type(x) == ns:
+        return x.dump()
+    return x
+
 def assert_ns_equal(data, expectation):
     """
     Assert that data representation in yaml matches the expectation.
     Both ends can be either a dictionary like object or a yaml string.
     """
-    def parse_and_normalize(x):
-        # if strings are parsed as yaml
-        if type(x) in (type(u''), type('')):
-            x = ns.loads(x)
-        # the resulting ns is normalized
-        x = normalize(x)
-        if type(x) == ns:
-            return x.dump()
-        return x
+    assert _parse_normalize_and_dump(data) == _parse_normalize_and_dump(expectation)
 
-    assert parse_and_normalize(data) == parse_and_normalize(expectation)
+def assert_ns_contains(data, expected):
+    """
+    Assert that all keys in expected have the same values
+    in data than in expected.
+    """
+    data = _parse_and_normalize(data)
+    expected = _parse_and_normalize(expected)
+    def filter_keys(x, reference):
+        if not isinstance(x, dict):
+            return x
+        return ns((
+            (k, filter_keys(v, reference[k]))
+            for k,v in x.items()
+            if k in reference
+        ))
+    data = _parse_and_normalize(data)
+    expected = _parse_and_normalize(expected)
+    assert filter_keys(data, expected).dump() == expected.dump()
 
 
