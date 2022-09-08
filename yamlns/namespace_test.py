@@ -453,6 +453,7 @@ class Namespace_Test(unittest.TestCase) :
 			"\n"
 			"\n"
 			"other: 2\n"
+			"...\n" # Why dumper adds this?
 		)
 
 	# Other
