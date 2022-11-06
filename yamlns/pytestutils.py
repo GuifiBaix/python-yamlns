@@ -6,8 +6,6 @@ from .testutils import (
     _parse_normalize_and_dump,
     normalize,
 )
-import sys
-py2 = sys.version_info < (3,)
 
 @pytest.fixture
 def test_name(request):
@@ -61,10 +59,7 @@ def assert_ns_equal(data, expectation):
     Assert that data representation in yaml matches the expectation.
     Both ends can be either a dictionary like object or a yaml string.
     """
-    if py2:
-        assert _parse_normalize_and_dump(expectation) == _parse_normalize_and_dump(data)
-    else:
-        assert _parse_normalize_and_dump(data) == _parse_normalize_and_dump(expectation)
+    assert _parse_normalize_and_dump(data) == _parse_normalize_and_dump(expectation)
 
 def assert_ns_contains(data, expected):
     """
@@ -81,9 +76,6 @@ def assert_ns_contains(data, expected):
         ))
     data = _parse_and_normalize(data)
     expected = _parse_and_normalize(expected)
-    if py2:
-        assert expected.dump() == filter_keys(data, expected).dump()
-    else:
-        assert filter_keys(data, expected).dump() == expected.dump()
+    assert filter_keys(data, expected).dump() == expected.dump()
 
 
