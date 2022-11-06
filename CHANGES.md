@@ -1,6 +1,6 @@
 # Change Log
 
-## unreleased
+## yamlns 0.11.0 (2022-11-06)
 
 - New pytest assert `assert_ns_contains`: Assert for a subset of a ns
 - New unittest assertion `assertNsContains`: Assert for a subset of a ns
