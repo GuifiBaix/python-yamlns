@@ -243,11 +243,11 @@ def test__assert_ns_contains__missing_key():
             ns(common='common', missing='value'),
         )
     assert format(exception.value) == (
-            "assert 'common: common\\n' == 'common: comm...sing: value\\n'\n"
+        "assert 'common: common\\n' == 'common: comm...sing: value\\n'\n"
         "    common: common\n"
         "  + missing: value"
         if py2 else
-            "assert 'common: common\\n' == 'common: comm...sing: value\\n'\n"
+        "assert 'common: common\\n' == 'common: comm...sing: value\\n'\n"
         "    common: common\n"
         "  - missing: value"
     )
@@ -259,11 +259,11 @@ def test__assert_ns_contains__differing_key():
             ns(common='expected'),
         )
     assert format(exception.value) == (
-            "assert 'common: different\\n' == 'common: expected\\n'\n"
-        "  - common: different"
-        "  + common: expected\n"
+        "assert 'common: different\\n' == 'common: expected\\n'\n"
+        "  - common: different\n"
+        "  + common: expected"
         if py2 else
-            "assert 'common: different\\n' == 'common: expected\\n'\n"
+        "assert 'common: different\\n' == 'common: expected\\n'\n"
         "  - common: expected\n"
         "  + common: different"
     )
