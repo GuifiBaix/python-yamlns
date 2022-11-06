@@ -243,7 +243,7 @@ def test__assert_ns_contains__missing_key():
             ns(common='common', missing='value'),
         )
     assert format(exception.value) == (
-        "assert 'common: common\\n' == 'common: comm...sing: value\\n'\n"
+        "assert 'common: common\\n' == 'common: common\\nmissing: value\\n'\n"
         "    common: common\n"
         "  + missing: value"
         if py2 else
