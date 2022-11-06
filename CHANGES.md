@@ -2,6 +2,9 @@
 
 ## unreleased
 
+- New pytest assert `assert_ns_contains`: Assert for a subset of a ns
+- New unittest assertion `assertNsContains`: Assert for a subset of a ns
+- Optimization: Using CSafeLoader/Dumper instead SafeLoader/Dumper
 - `json2yaml`: new script to have a yaml based pretty printed view on json data
 - Renamed script `nstemplate.py` as `nstemplate` (removed `.py`)
 - pytest utils documented

@@ -25,9 +25,12 @@ And it also provides many other goodies:
     - Function to extract an empty YAML scheletton given a template with substitutions.
     - Function to fill a `format` template like file with a YAML file.
     - Command line tool to run those two functions 
-- `unittest` assertion `assertNsEqual` to compare json like structures among them or with yaml strings and display the difference in a nice line by line diff.
+- `unittest` assertions
+    - `assertNsEqual` to compare json like structures among them or with yaml strings and display the difference in a nice line by line diff.
+    - `assertNsContains` to ensure that a json like structure is a superset of the expectation
 - `pyunit` inegration
     - `pytestutils.assert_ns_equal`: equivalent to `assertNsEqual` to be used in pytest
+    - `pytestutils.assert_ns_contains`: equivalent to `assertNsContains` to be used in pytest
     - `pytestutils.yaml_snapshot`: fixture to detect changes estructure changes between test executions in yaml format.
     - `pytestutils.text_snapshot`: fixture to detect changes text changes between test executions.
 
@@ -107,26 +110,39 @@ nstemplate extract <template> <yamlskeleton>
 cat file.json | json2yaml > file.yaml
 ```
 
-## Testing structures
+## Testing structure content
 
 ```python
 class MyTest(unittest.TestCase):
 
-    from yamlns.testutils import assertNsEqual
+    from yamlns.testutils import assertNsEqual, assertNsContains
 
     def test(self):
-        data = dict((letter, i) for i,letter in enumerate('murcielago'))
+        data = dict(letters = dict(
+            (letter, i) for i,letter in enumerate('murcielago'))
+        )
         self.assertNsEqual(data, """\
-            a: 7
-            c: 3
-            e: 5
-            g: 8
-            i: 4
-            l: 6
-            m: 0
-            o: 9
-            r: 2
-            u: 1
+            letters:
+                a: 7
+                c: 3
+                e: 5
+                g: 8
+                i: 4
+                l: 6
+                m: 0
+                o: 9
+                r: 2
+                u: 1
+        """)
+
+        # Data is a superset of the expectation
+        self.assertNsContains(data, """\
+            letters:
+                a: 7
+                e: 5
+                i: 4
+                o: 9
+                u: 1
         """)
 ```
 
@@ -135,6 +151,7 @@ class MyTest(unittest.TestCase):
 The following helper tools for pytest are provided:
 
 - `pytestutils.assert_ns_equal`: equivalent to `assertNsEqual` to be used in pytest
+- `pytestutils.assert_ns_contains`: equivalent to `assertNsContains` to be used in pytest
 - `pytestutils.yaml_snapshot`: fixture to detect changes estructure changes between test executions in yaml format.
 - `pytestutils.text_snapshot`: fixture to detect changes text changes between test executions.
 
@@ -158,21 +175,36 @@ def test_with_assert_ns_equal():
 
 ```
 
+### `assert_ns_contains`
+
+A custom assertion similar to `assert_ns_equal` but ignores any key not pressent in the expectation.
+
+```python
+from yamlns.pytestutils import assert_ns_equal
+
+def test_with_assert_ns_equal():
+    data = dict(hello='world', ignored=data)
+    assert_ns_equal(data, """\
+        hello: world
+    """)
+
+```
+
 ### `yaml_snapshot` and `text_snapshot`
 
 `yaml_snapshot` and `text_snapshot` are fixtures available whenever you install yamlns.
 You can use it to make snapshots of data that can be compared to previous executions.
-Snapshots are stored into `testdata/snapshots/`.
-They are given a name that depends on the fully qualified name of the test.
+Snapshots are stored into `testdata/snapshots/`
+and are given a name that depends on the fully qualified name of the test.
 The ones with the `.expected` suffix are accepted snapshots,
 while the ones ending with `.result` are generated
 when the current execution does not match.
 
 If you consider the `.result` is valid, just rename it as `.expected`.
-The assert message provides you with the commandline for convenience.
+For convenience, the assert message indicates the commandline to perform the renaming.
 
 `text_snapshot` just dumps verbatim text while
-`yaml_snapshot` normalizes and dumps the data
+`yaml_snapshot` compares the normalized dump of the data
 just like `assert_ns_equal` does.
 
 ```python
