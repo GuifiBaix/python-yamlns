@@ -19,6 +19,7 @@ try:
 except ImportError:
 	np=None
 
+_sorted = sorted
 
 def text(data):
 	if type(data) is type(u''):
@@ -75,6 +76,26 @@ class namespace(OrderedDict) :
 
 	def deepcopy(self) :
 		return self.loads(self.dump())
+
+	@classmethod
+	def deep(cls, x, sorted=False):
+		"""Turns recursively all the dicts of a json like
+		structure into yamlns namespaces. Set sorted to true
+		to force alphabetical order of the keys
+		so that their dumps can be compared.
+		"""
+		sort_function = _sorted if sorted else lambda x:x
+		if type(x) in (dict, namespace):
+			return ns(
+				(k,cls.deep(v, sorted=sorted))
+				for k,v in sort_function(x.items())
+			)
+		if type(x) in (list, tuple):
+			return [
+				cls.deep(y, sorted=sorted)
+				for y in x
+			]
+		return x
 
 	@classmethod
 	def loads(cls, yamlContent) :

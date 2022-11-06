@@ -1,20 +1,11 @@
 from . import Path, text
 from . import namespace as ns
 import pytest
-
-def normalize(x):
-    """Turns recursively all the dicts of a json like
-    structure into yamlns namespaces with their keys sorted
-    so that their dumps can be compared.
-    """
-    if isinstance(x, dict):
-        return ns((
-            (k, normalize(v))
-            for k,v in sorted(x.items())
-        ))
-    if isinstance(x, (list, tuple)):
-        return [normalize(item) for item in x]
-    return x
+from .testutils import (
+    _parse_and_normalize,
+    _parse_normalize_and_dump,
+    normalize,
+)
 
 @pytest.fixture
 def test_name(request):
@@ -63,19 +54,6 @@ def yaml_snapshot(text_snapshot):
 
     return assertion
 
-def _parse_and_normalize(x):
-    # if strings are parsed as yaml
-    if type(x) in (type(u''), type('')):
-        x = ns.loads(x)
-    # the resulting ns is normalized
-    return normalize(x)
-
-def _parse_normalize_and_dump(x):
-    x = _parse_and_normalize(x)
-    if type(x) == ns:
-        return x.dump()
-    return x
-
 def assert_ns_equal(data, expectation):
     """
     Assert that data representation in yaml matches the expectation.
@@ -88,8 +66,6 @@ def assert_ns_contains(data, expected):
     Assert that all keys in expected have the same values
     in data than in expected.
     """
-    data = _parse_and_normalize(data)
-    expected = _parse_and_normalize(expected)
     def filter_keys(x, reference):
         if not isinstance(x, dict):
             return x

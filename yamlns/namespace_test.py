@@ -528,4 +528,136 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertContent(u"otra: caña\n")
 
 
+	def test_deep_int(self):
+		self.assertEqual(namespace.deep(2), 2)
+
+	def test_deep_dict(self):
+		result = namespace.deep(
+			dict(a=2)
+		)
+		self.assertEqual(
+			result,
+			namespace(a=2),
+		)
+		self.assertEqual(type(result), namespace)
+
+	def test_deep_subdict(self):
+		result = namespace.deep(
+			dict(a=dict(b=2))
+		)
+		self.assertEqual(
+			result,
+			namespace(a=namespace(b=2)),
+		)
+		self.assertEqual(type(result), namespace)
+		self.assertEqual(type(result.a), namespace)
+
+	def test_deep_ns_keeporder(self):
+		result = namespace.deep(
+			namespace([
+				('last', 3),
+				('first', 'value'),
+			])
+		)
+		self.assertEqual(
+			[k for k,v in result.items()],
+			['last', 'first'],
+		)
+		self.assertEqual(type(result), namespace)
+
+	def test_deep_ns_sorted(self):
+		result = namespace.deep(
+			namespace([
+				('last', 3),
+				('first', 'value'),
+			]),
+			sorted=True,
+		)
+		self.assertEqual(
+			[k for k,v in result.items()],
+			['first', 'last'],
+		)
+		self.assertEqual(type(result), namespace)
+
+	def test_deep_ns_subdict(self):
+		result = namespace.deep(
+			namespace(a=dict(b=2))
+		)
+		self.assertEqual(
+			result,
+			namespace(a=namespace(b=2)),
+		)
+		self.assertEqual(type(result), namespace)
+		self.assertEqual(type(result.a), namespace)
+
+	def test_deep_list_ns(self):
+		result = namespace.deep([3,dict(a=55)])
+		self.assertEqual(type(result), list)
+		self.assertEqual(type(result[1]), namespace)
+
+	def test_deep_tuple_ns(self):
+		result = namespace.deep((3,dict(a=55)))
+		self.assertEqual(type(result), list)
+		self.assertEqual(type(result[1]), namespace)
+
+	def test_deep_list_ns_sorted(self):
+		result = namespace.deep(
+			[
+				namespace([
+					('last', 3),
+					('first', 'value'),
+				]),
+			],
+			sorted=True,
+		)
+		self.assertEqual(
+			[k for k,v in result[0].items()],
+			['first', 'last'],
+		)
+
+	def test_deep_list_ns_keepOrder(self):
+		result = namespace.deep(
+			[
+				namespace([
+					('last', 3),
+					('first', 'value'),
+				]),
+			],
+		)
+		self.assertEqual(
+			[k for k,v in result[0].items()],
+			['last', 'first'],
+		)
+
+	def test_deep_ns_ns_sorted(self):
+		result = namespace.deep(
+			namespace(
+				a=namespace([
+					('last', 3),
+					('first', 'value'),
+				]),
+			),
+			sorted=True,
+		)
+		self.assertEqual(
+			[k for k,v in result.a.items()],
+			['first', 'last'],
+		)
+
+	def test_deep_ns_ns_keepOrder(self):
+		result = namespace.deep(
+			namespace(
+				a=namespace([
+					('last', 3),
+					('first', 'value'),
+				]),
+			),
+		)
+		self.assertEqual(
+			[k for k,v in result.a.items()],
+			['last', 'first'],
+		)
+
+
+
 # vim: sw=4 ts=4 noet
