@@ -6,6 +6,7 @@ from . import namespace as ns
 class TestUtils_Test(unittest.TestCase):
 
 	from .testutils import assertNsEqual
+	from .testutils import assertNsContains
 
 	def test_assertNsEqual_differentValues(self):
 		with self.assertRaises(AssertionError) as ctx:
@@ -121,6 +122,45 @@ class TestUtils_Test(unittest.TestCase):
 			"+ - 5\n"
 			"?   ^\n"
 			)
+
+
+	def test__assertNsContains__equals(self):
+		self.assertNsContains(
+			ns(akey='value'),
+			ns(akey='value')
+		)
+		# Should not raise
+
+	def test__assertNsContains__differingKey(self):
+		with self.assertRaises(AssertionError) as ctx:
+			self.assertNsContains(
+				ns(common="different"),
+				ns(common="value")
+			)
+		self.assertMultiLineEqual(type('u')(ctx.exception),
+			"""'common: different\\n' != 'common: value\\n'\n"""
+			"""- common: different\n"""
+			"""+ common: value\n"""
+		)
+
+	def test__assertNsContains__missingKey(self):
+		with self.assertRaises(AssertionError) as ctx:
+			self.assertNsContains(
+				ns(common="value"),
+				ns(common="value", missing='value')
+			)
+		self.assertMultiLineEqual(type('u')(ctx.exception),
+			"""'common: value\\n' != 'common: value\\nmissing: value\\n'\n"""
+			"""  common: value\n"""
+			"""+ missing: value\n"""
+		)
+
+	def test__assertNsContains__ignoredKey(self):
+		self.assertNsContains(
+			ns(common="value", ignored='value'),
+			ns(common="value")
+		)
+		# Should not raise
 
 
 # vim: noet ts=4 sw=4

@@ -236,22 +236,34 @@ def test__assert_ns_equal__string_yaml():
     # Should not raise
     assert_ns_equal("text","text")
 
-def test__assert_ns_contains__missingKey():
+def test__assert_ns_contains__missing_key():
     with pytest.raises(AssertionError) as exception:
         assert_ns_contains(
-            ns(ignored='value'),
-            ns(missing='value')
+            ns(common='common'),
+            ns(common='common', missing='value'),
         )
     assert format(exception.value) == (
-        "assert '{}\\n' == 'missing: value\\n'\n"
-        "  - missing: value\n"
-        "  + {}"
+            "assert 'common: common\\n' == 'common: comm...sing: value\\n'\n"
+        "    common: common\n"
+        "  - missing: value"
     )
 
-def test__assert_ns_contains__equals():
+def test__assert_ns_contains__differing_key():
+    with pytest.raises(AssertionError) as exception:
+        assert_ns_contains(
+            ns(common='different'),
+            ns(common='expected'),
+        )
+    assert format(exception.value) == (
+            "assert 'common: different\\n' == 'common: expected\\n'\n"
+        "  - common: expected\n"
+        "  + common: different"
+    )
+
+def test__assert_ns_contains__key_missing_in_expectation_ignored():
     assert_ns_contains(
+        ns(akey='value', ignored='value'),
         ns(akey='value'),
-        ns(akey='value')
     )
 
 
