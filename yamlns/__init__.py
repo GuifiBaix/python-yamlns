@@ -52,6 +52,20 @@ class namespace(OrderedDict) :
 			del self[name]
 		except KeyError:
 			super(namespace, self).__delattr__(name)
+	
+	def __getitem__(self, name):
+		parts = name.split('.', 1)
+		result = super(namespace, self).__getitem__(parts[0])
+		if parts[1:]:
+			return result[parts[1]]
+		return result
+
+	def __setitem__(self, name, value):
+		parts = name.split('.', 1)
+		if not parts[1:]:
+			return super(namespace, self).__setitem__(parts[0], value)
+		level = self.setdefault(parts[0], ns())
+		level[parts[1]]=value
 
 	def __dir__(self):
 

@@ -658,6 +658,15 @@ class Namespace_Test(unittest.TestCase) :
 			['last', 'first'],
 		)
 
+	def test_getitem_multilevel(self):
+		data = namespace(a=namespace(b=4))
+		self.assertEqual(data['a.b'], 4)
+
+
+	def test_setitem_multilevel(self):
+		data = namespace()
+		data['a.b'] = 4
+		self.assertEqual(data, namespace(a=namespace(b=4)))
 
 
 # vim: sw=4 ts=4 noet
