@@ -30,6 +30,7 @@ setup(
 		'setuptools>=20.4', # markdown readme
 		'PyYAML<6, >5.3.1' if py2 else 'PyYAML>=5.3.1', # security
 		'pytest<4.7' if py2 else 'pytest',
+		'pytest-cov',
 		'pathlib2' if py2 else '', # Py2 backport
 		'packaging<21' if py2 else '', # Py2, indirect importlib-metadata, zipp
 		'zipp<2' if py2 else '', # Py2, indirect importlib-metadata
