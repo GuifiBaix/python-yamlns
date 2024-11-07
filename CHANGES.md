@@ -1,5 +1,12 @@
 # Change Log
 
+## yamlns 0.12.0 (2024-11-07)
+
+- Multilevel getting `value = a['b.c']`
+- Multilevel setting `a['b.c'] = 'value'`
+- Fix: `pytestutils`: ensure the asserts are registered for rewrite
+- Fix: `pytestutils_test`: tolerant with spacing changes on pytest output
+
 ## yamlns 0.11.0 (2022-11-06)
 
 - New pytest assert `assert_ns_contains`: Assert for a subset of a ns
