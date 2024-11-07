@@ -2,10 +2,11 @@ from . import Path, text
 from . import namespace as ns
 import pytest
 from .testutils import (
-    _parse_and_normalize,
-    _parse_normalize_and_dump,
     normalize,
 )
+
+pytest.register_assert_rewrite('yamlns._pytestutils_asserts')
+from ._pytestutils_asserts import assert_ns_equal
 
 @pytest.fixture
 def test_name(request):
@@ -54,13 +55,6 @@ def yaml_snapshot(text_snapshot):
 
     return assertion
 
-def assert_ns_equal(data, expectation):
-    """
-    Assert that data representation in yaml matches the expectation.
-    Both ends can be either a dictionary like object or a yaml string.
-    """
-    assert _parse_normalize_and_dump(data) == _parse_normalize_and_dump(expectation)
-
 def assert_ns_contains(data, expected):
     """
     Assert that all keys in expected have the same values
@@ -74,8 +68,6 @@ def assert_ns_contains(data, expected):
             for k,v in x.items()
             if k in reference
         ))
-    data = _parse_and_normalize(data)
-    expected = _parse_and_normalize(expected)
-    assert filter_keys(data, expected).dump() == expected.dump()
+    assert_ns_equal(filter_keys(data, expected), expected)
 
 
