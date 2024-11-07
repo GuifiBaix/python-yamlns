@@ -102,7 +102,7 @@ def test__yaml_snapshot__no_expectation(
 
     expected = (
         "First snapshot, check results and accept them with:\n"
-        "  mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
+        "mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
     ).format(test_name)
     assert format(exception.value)[:len(expected)] == expected
     assertContent(clean_snapshotdir / '{}.result'.format(test_name),
@@ -123,7 +123,7 @@ def test__yaml_snapshot__differentExpectation(
 
     expected=(
         "Failed snapshot. Check the result and if it is ok accept it with:\n"
-        "  mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
+        "mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
     ).format(test_name)
     assert format(exception.value)[:len(expected)] == expected
 
@@ -247,7 +247,7 @@ def test__assert_ns_contains__missing_key():
         "    common: common\n"
         "  + missing: value"
         if py2 else
-        "assert 'common: common\\n' == 'common: comm...sing: value\\n'\n"
+        "assert 'common: common\\n' == 'common: comm...sing: value\\n'\n  \n"
         "    common: common\n"
         "  - missing: value"
     )
@@ -258,12 +258,13 @@ def test__assert_ns_contains__differing_key():
             ns(common='different'),
             ns(common='expected'),
         )
+    print(repr(format(exception.value)))
     assert format(exception.value) == (
         "assert 'common: different\\n' == 'common: expected\\n'\n"
         "  - common: different\n"
         "  + common: expected"
         if py2 else
-        "assert 'common: different\\n' == 'common: expected\\n'\n"
+        "assert 'common: different\\n' == 'common: expected\\n'\n  \n"
         "  - common: expected\n"
         "  + common: different"
     )
