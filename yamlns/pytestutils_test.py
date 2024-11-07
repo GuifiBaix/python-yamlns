@@ -102,8 +102,8 @@ def test__yaml_snapshot__no_expectation(
 
     expected = (
         "First snapshot, check results and accept them with:\n"
-        "mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
-    ).format(test_name)
+        "{spacing}mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
+    ).format(test_name, spacing="  " if py2 else "")
     assert format(exception.value)[:len(expected)] == expected
     assertContent(clean_snapshotdir / '{}.result'.format(test_name),
         "snapshot: content\n"
@@ -123,8 +123,8 @@ def test__yaml_snapshot__differentExpectation(
 
     expected=(
         "Failed snapshot. Check the result and if it is ok accept it with:\n"
-        "mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
-    ).format(test_name)
+        "{spacing}mv testdata/snapshots/{0}.result testdata/snapshots/{0}.expected\n"
+    ).format(test_name, spacing="  " if py2 else "")
     assert format(exception.value)[:len(expected)] == expected
 
     assertContent(snapshotdir/'{}.result'.format(test_name),
