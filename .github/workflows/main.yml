@@ -30,6 +30,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+
       #- name: Install system dependencies
       #  run: |
       #    sudo apt install gcc libffi-dev libssl-dev nodejs npm libyaml-dev libxslt1-dev
@@ -39,15 +40,18 @@ jobs:
       - name: Install dependencies
         run: |
           ./setup.py develop
+
       - uses: BSFishy/pip-action@v1
         with:
           packages: |
             pytest
             pytest-cov
             coveralls
+
       - name: Unit tests
         run: |
           pytest --cov=yamlns
+
       - name: Coveralls
         uses: AndreMiras/coveralls-python-action@develop
         with:
