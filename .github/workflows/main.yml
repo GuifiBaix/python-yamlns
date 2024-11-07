@@ -59,8 +59,6 @@ jobs:
       - uses: BSFishy/pip-action@v1
         with:
           packages: |
-            pytest
-            pytest-cov
             coveralls
 
       - name: Unit tests
