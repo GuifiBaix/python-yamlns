@@ -1,5 +1,9 @@
 # Change Log
 
+## yamlns 0.12.1 (2025-01-05)
+
+- Fix: do not check for dotted attributes if key is not a string
+
 ## yamlns 0.12.0 (2024-11-07)
 
 - Multilevel getting `value = a['b.c']`
