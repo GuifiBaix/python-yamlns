@@ -25,6 +25,7 @@ jobs:
           - '2.7'
           - '3.10'
           - '3.11'
+          - '3.12'
     name: Python ${{ matrix.python-version }}
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
