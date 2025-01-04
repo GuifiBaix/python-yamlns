@@ -669,4 +669,11 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(data, namespace(a=namespace(b=4)))
 
 
+	def test_non_string_key(self):
+		data = namespace()
+		data[3, 'key'] = 'value'
+		self.assertEqual(data[3, 'key'], 'value')
+		namespace.loads("['key', 3]: value")
+
+
 # vim: sw=4 ts=4 noet

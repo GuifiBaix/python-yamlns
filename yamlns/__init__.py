@@ -54,6 +54,8 @@ class namespace(OrderedDict) :
 			super(namespace, self).__delattr__(name)
 	
 	def __getitem__(self, name):
+		if not hasattr(name, 'split'):
+			return super(namespace, self).__getitem__(name)
 		parts = name.split('.', 1)
 		result = super(namespace, self).__getitem__(parts[0])
 		if parts[1:]:
@@ -61,6 +63,8 @@ class namespace(OrderedDict) :
 		return result
 
 	def __setitem__(self, name, value):
+		if not hasattr(name, 'split'):
+			return super(namespace, self).__setitem__(name, value)
 		parts = name.split('.', 1)
 		if not parts[1:]:
 			return super(namespace, self).__setitem__(parts[0], value)
