@@ -15,6 +15,11 @@ except ImportError:
 		Path = None
 
 try:
+	from yaml import CSafeLoader as SafeLoader, CSafeDumper as SafeDumper
+except ImportError:
+	from yaml import SafeLoader, SafeDumper
+
+try:
 	import numpy as np
 except ImportError:
 	np=None
@@ -188,7 +193,7 @@ def _varsTree(theVars):
 	return ns
 
 
-class NamespaceYamlDumper(yaml.CSafeDumper):
+class NamespaceYamlDumper(SafeDumper):
 
 	def __init__(self, *args, **kwargs):
 		super(NamespaceYamlDumper, self).__init__(*args, **kwargs)
@@ -270,7 +275,7 @@ class NamespaceYamlDumper(yaml.CSafeDumper):
 		return node
 
 
-class NamespaceYAMLLoader(yaml.CSafeLoader):
+class NamespaceYAMLLoader(SafeLoader):
 
 	def __init__(self, *args, **kwargs):
 		super(NamespaceYAMLLoader, self).__init__(*args, **kwargs)
