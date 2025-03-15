@@ -1,5 +1,9 @@
 # Change Log
 
+## yamlns 0.12.2 (2025-03-15)
+
+- Fallback for pure python libyaml if compiled version not available
+
 ## yamlns 0.12.1 (2025-01-05)
 
 - Fix: do not check for dotted attributes if key is not a string
