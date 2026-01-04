@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-
-
 import yaml
 from collections import OrderedDict
 import decimal
