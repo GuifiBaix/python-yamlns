@@ -22,9 +22,6 @@ setup(
 			'nstemplate = yamlns.nstemplate:main',
 			'nstemplate.py = yamlns.nstemplate:deprecated', # backwards compatibility
 		],
-		pytest11 = [
-			'yamlns_tests = yamlns.pytestutils',
-		],
 	),
 	install_requires=[
 		'setuptools>=20.4', # markdown readme

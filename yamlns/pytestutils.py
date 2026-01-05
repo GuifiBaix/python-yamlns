@@ -1,12 +1,11 @@
 from . import Path, text
 from . import namespace as ns
+from ._pytestutils_asserts.assert_impl import assert_ns_equal
 import pytest
 from .testutils import (
     normalize,
 )
 
-pytest.register_assert_rewrite('yamlns._pytestutils_asserts')
-from ._pytestutils_asserts import assert_ns_equal
 
 @pytest.fixture
 def test_name(request):

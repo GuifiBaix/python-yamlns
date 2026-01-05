@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import yamlns
+from . import namespace
 import sys
 from io import open # Py2 compat
 
@@ -10,7 +10,7 @@ def _u(x, encoding='utf8'):
 	return type(u'')(x)
 
 def apply(yamlfile, template, output, encoding='utf-8') :
-	yaml = yamlns.namespace.load(yamlfile)
+	yaml = namespace.load(yamlfile)
 	with open(template, encoding=encoding) as f :
 		content = f.read()
 	result = content.format(**yaml)
@@ -20,7 +20,7 @@ def apply(yamlfile, template, output, encoding='utf-8') :
 def extract(input_template, output_yaml, encoding='utf-8') :
 	with open(input_template, encoding=encoding) as f :
 		content = f.read()
-	ns = yamlns.namespace.fromTemplateVars(content)
+	ns = namespace.fromTemplateVars(content)
 	with open(output_yaml, 'w') as f :
 		f.write(_u(ns.dump(), encoding))
 
