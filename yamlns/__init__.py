@@ -3,13 +3,7 @@ from collections import OrderedDict
 import decimal
 import datetime
 from . import dateutils
-try:
-	from pathlib2 import Path
-except ImportError:
-	try:
-		from pathlib import Path
-	except ImportError:
-		Path = None
+from .compat import Path, text
 
 try:
 	from yaml import CSafeLoader as SafeLoader, CSafeDumper as SafeDumper
@@ -22,13 +16,6 @@ except ImportError:
 	np=None
 
 _sorted = sorted
-
-def text(data):
-	if type(data) is type(u''):
-		return data
-	if type(data) is type(b''):
-		return data.decode('utf8')
-	return type(u'')(data)
 
 class namespace(OrderedDict) :
 	"""A dictionary whose values can be accessed also as attributes

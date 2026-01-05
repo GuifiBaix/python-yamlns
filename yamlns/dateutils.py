@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-
-_text = type(u'')
+from .compat import text
 
 def date(*adate):
 	"""Transforms almost anything into a datetime.date"""
@@ -15,7 +14,7 @@ def slashDate(adate) :
 
 def isoDate(adate) :
 	"""Turns a date in almost any format into a iso formated date string"""
-	return _text(Date(adate))
+	return text(Date(adate))
 
 def compactDate(adate) :
 	"""Turns a date in almost any format into a iso formated date string"""
@@ -81,7 +80,7 @@ class Date(datetime.date) :
 
 	@property
 	def isoDate(self):
-		return _text(self)
+		return text(self)
 
 	@property
 	def slashDate(self):
