@@ -115,12 +115,17 @@ class namespace(OrderedDict) :
 	@classmethod
 	def load(cls, inputfile) :
 
+		# Already open read file
 		if hasattr(inputfile, 'read') :
 			return yaml.load(stream=inputfile, Loader=NamespaceYAMLLoader)
-		if Path:
-			with Path(inputfile).open() as f:
+
+		# Compatibility code when Path is not available
+		if not Path:
+			from io import open
+			with open(inputfile) as f:
 				return yaml.load(stream=f, Loader=NamespaceYAMLLoader)
-		with open(inputfile) as f:
+
+		with Path(inputfile).open() as f:
 			return yaml.load(stream=f, Loader=NamespaceYAMLLoader)
 
 	def dump(self, filename=None) :
@@ -133,24 +138,25 @@ class namespace(OrderedDict) :
 				Dumper = NamespaceYamlDumper,
 			)
 
-		# TODO: Test None (stdout)
 		if filename is None:
 			return dumpit(filename)
 
-		# TODO: Test file
+		# Already open write file
 		if hasattr(filename,'write') :
 			return dumpit(filename)
 
 		import sys
 		mode = 'wb' if sys.version_info[0] == 2 else 'w'
 
-		from io import open
+		# Compatibility code when Path is not available
 		if not Path:
+			from io import open
 			with open(filename, mode) as f :
 				return dumpit(f)
 
 		with Path(filename).open(mode) as f :
 			return dumpit(f)
+
 
 	@classmethod
 	def fromTemplateVars(clss, templateContent):
