@@ -6,9 +6,9 @@ from .pytestutils import (
     assert_ns_equal,
     assert_ns_contains,
     normalize,
-    Path,
     ns
 )
+from .compat import Path
 import pytest
 import sys
 import re

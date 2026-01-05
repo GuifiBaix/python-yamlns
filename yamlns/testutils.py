@@ -2,12 +2,12 @@
 
 import unittest
 from . import namespace as ns
+from .compat import isStr
 
 # Readable verbose testcase listing
 unittest.TestCase.__str__ = unittest.TestCase.id
 
 def assertNsEqual(self, dict1, dict2):
-
     """
     Asserts that both dicts have equivalent structure
     by comparing its dump as YAML with all the keys
@@ -19,7 +19,7 @@ def assertNsEqual(self, dict1, dict2):
     to yaml sorting the keys of any dict within the structure.
     """
     def parseIfString(x):
-        if type(x) in (type(u''),type(b'')):
+        if isStr(x):
             return ns.loads(x)
         return x
 
@@ -42,7 +42,7 @@ def normalize(x):
 
 
 def _parse_and_normalize(x):
-    if type(x) in (type(u''), type('')):
+    if isStr(x):
         x = ns.loads(x)
     return normalize(x)
 

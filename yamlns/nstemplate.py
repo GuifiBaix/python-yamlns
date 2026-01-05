@@ -1,29 +1,19 @@
 #!/usr/bin/python3
 
 from . import namespace
+from .compat import text, Path
 import sys
-from io import open # Py2 compat
-
-def _u(x, encoding='utf8'):
-	if type(x) == type(b''):
-		return x.decode(encoding)
-	return type(u'')(x)
 
 def apply(yamlfile, template, output, encoding='utf-8') :
 	yaml = namespace.load(yamlfile)
-	with open(template, encoding=encoding) as f :
-		content = f.read()
+	content = Path(template).read_text(encoding=encoding)
 	result = content.format(**yaml)
-	with open(output, 'w', encoding=encoding) as f :
-		f.write(_u(result,encoding))
+	Path(output).write_text(text(result, encoding=encoding), encoding=encoding)
 
 def extract(input_template, output_yaml, encoding='utf-8') :
-	with open(input_template, encoding=encoding) as f :
-		content = f.read()
+	content = Path(input_template).read_text(encoding=encoding)
 	ns = namespace.fromTemplateVars(content)
-	with open(output_yaml, 'w') as f :
-		f.write(_u(ns.dump(), encoding))
-
+	Path(output_yaml).write_text(text(ns.dump(), encoding=encoding), encoding=encoding)
 
 def main(args=sys.argv) : # pragma: no cover
 	import argparse

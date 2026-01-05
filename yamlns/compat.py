@@ -14,3 +14,9 @@ def text(data, encoding='utf8'):
 		return data.decode(encoding)
 	return type(u'')(data)
 
+def isStr(x):
+    return type(x) in (
+        type(u''),
+        type(b''),
+    )
+
