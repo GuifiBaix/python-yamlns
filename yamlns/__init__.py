@@ -2,11 +2,6 @@ import yaml
 from collections import OrderedDict
 from .compat import Path, text
 
-try:
-	import numpy as np
-except ImportError:
-	np=None
-
 _sorted = sorted
 
 class namespace(OrderedDict) :
