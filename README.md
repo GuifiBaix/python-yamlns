@@ -23,6 +23,7 @@ And it also provides many other goodies:
       This avoids losing precision when succesive load/store cycles are alternated.
     - YAML **dates** are maped to an extension of `datetime.date` which provides output formats as attributes
       which are convenient to call in `format` templates.
+    - Support for numpy arrays (dump only)
 - Tools to `format` templates with complex namespace structures.
     - Given the attribute like access, `format` templates result cleaner with multilevel dicts.
     - Function to extract an empty YAML scheletton given a template with substitutions.

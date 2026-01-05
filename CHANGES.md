@@ -1,5 +1,11 @@
 # Change Log
 
+## Unreleased
+
+- 💥 .inf and .nan results in Decimal infinite and NaN instead of float's
+- 💥 Private module structure compatible with pytest 9
+- ✅ Better serialization test coverage
+
 ## yamlns 0.12.2 (2025-03-15)
 
 - Fallback for pure python libyaml if compiled version not available
