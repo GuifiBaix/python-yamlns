@@ -4,6 +4,8 @@
 
 - 💥 .inf and .nan results in Decimal infinite and NaN instead of float's
 - 💥 Private module structure compatible with pytest 9
+- ♻️ Extracted Py2 and other compatibility utilities into a yamlns.compat
+- ♻️ Splitted serialization classes from main namespace class
 - ✅ Better serialization test coverage
 
 ## yamlns 0.12.2 (2025-03-15)
