@@ -18,8 +18,10 @@ except ImportError:
 _sorted = sorted
 
 class namespace(OrderedDict) :
-	"""A dictionary whose values can be accessed also as attributes
-	and can be loaded and dumped as YAML."""
+	"""
+	A dictionary whose values can be accessed also as attributes
+	and can be loaded and dumped as YAML.
+	"""
 
 	def __init__(self, *args, **kwd) :
 		super(namespace, self).__init__(*args, **kwd)
@@ -211,7 +213,7 @@ class NamespaceYamlDumper(SafeDumper):
 		elif data == -self.inf_value:
 			value = '-.inf'
 		else:
-# Here previous version called repr
+			# Here previous version called repr
 			value = type(u'')(data).lower()
 			# Note that in some cases `repr(data)` represents a float number
 			# without the decimal parts.  For instance:
