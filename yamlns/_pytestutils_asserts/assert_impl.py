@@ -1,7 +1,7 @@
 # DO NOT IMPORT THIS FILE DIRECTLY FROM pytestutils
 # IT WOULD BREAK pytest ASSERT REWRITE
 
-def _ensure_pytest_assert_rewrite_active():
+def _ensure_pytest_assert_rewrite_active(): # pragma: no cover
     spec = globals().get("__spec__")
     loader = getattr(spec, "loader", None)
 

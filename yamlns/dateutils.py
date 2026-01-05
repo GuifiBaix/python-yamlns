@@ -180,7 +180,7 @@ class Period() :
 		return tuple(self)
 
 
-def load_tests(loader, tests, ignore):
+def load_tests(loader, tests, ignore): # pragma: no cover
 	import doctest
 	tests.addTests(doctest.DocTestSuite())
 	return tests
