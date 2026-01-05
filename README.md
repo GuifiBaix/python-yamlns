@@ -8,32 +8,34 @@
 
 An extended dictionary to conveniently access your structured data
 with direct mapping from and to YAML and other structured formats.
+
 Besides the item like `['field']` access, an attribute like access `.field` is provided.
 And it also provides many other goodies:
 
-- Direct mapping to YAML using `dump()` and `load()` methods.
-- Convenient variations from the pure YAML specs on how value types are mapped between YAML and Python:
-    - Inner YAML mappings (`dict`s) are loaded as `namespace`s as well instead of Python `dict`.
-    - Namespaces preserve the insertion order, as they are based on `odict`.
+- Convenient access:
+    - Provides both attribute access `x.field` and regular key access `x.["field"]`
+    - Access to deep attributes `x['parent.child']`
+- YAML serialization with `x.dump()` and `x.load()`, with those convenient differences from pure YAML specs:
+    - Inner YAML **mappings** (`dict`s) are loaded as `namespace`s, instead of Python `dict`.
+    - Namespaces **preserve the insertion order**, as they are based on `odict`.
       This way the insertion order and the order in the original loaded file is preserved when stored.
-    - YAML floats are loaded as `Decimal` and `Decimal` objects are stored as regular YAML floats.
+    - YAML **floats** are loaded as `Decimal` and `Decimal` objects are stored as regular YAML floats.
       This avoids losing precision when succesive load/store cycles are alternated.
-    - YAML dates are maped to an extension of `datetime.date` which provides output formats as attributes
+    - YAML **dates** are maped to an extension of `datetime.date` which provides output formats as attributes
       which are convenient to call in `format` templates.
 - Tools to `format` templates with complex namespace structures.
     - Given the attribute like access, `format` templates result cleaner with multilevel dicts.
     - Function to extract an empty YAML scheletton given a template with substitutions.
     - Function to fill a `format` template like file with a YAML file.
-    - Command line tool to run those two functions 
+    - CLI tool to run those two functions (`nstemplate`)
 - `unittest` assertions
     - `assertNsEqual` to compare json like structures among them or with yaml strings and display the difference in a nice line by line diff.
     - `assertNsContains` to ensure that a json like structure is a superset of the expectation
 - `pyunit` inegration
     - `pytestutils.assert_ns_equal`: equivalent to `assertNsEqual` to be used in pytest
     - `pytestutils.assert_ns_contains`: equivalent to `assertNsContains` to be used in pytest
-    - `pytestutils.yaml_snapshot`: fixture to detect changes estructure changes between test executions in yaml format.
+    - `pytestutils.yaml_snapshot`: fixture to detect namespace changes between test executions in yaml format.
     - `pytestutils.text_snapshot`: fixture to detect changes text changes between test executions.
-
 
 ## Example
 
