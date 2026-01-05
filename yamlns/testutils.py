@@ -31,7 +31,8 @@ def assertNsEqual(self, dict1, dict2):
 
     self.assertMultiLineEqual(
         yaml(dict1),
-        yaml(dict2))
+        yaml(dict2),
+    )
 
 def normalize(x):
     """Turns recursively all the dicts of a json like

@@ -75,6 +75,12 @@ class Namespace_Test(unittest.TestCase) :
 			"lala: boo\n"
 			)
 
+	def test_getattribute_missing(self):
+		ns = namespace()
+		with self.assertRaises(AttributeError) as ctx:
+			ns.nonexisting
+		self.assertEqual(format(ctx.exception), "nonexisting")
+
 	def test_delattribute(self):
 		ns = namespace()
 		ns.lola = "foo"
@@ -151,104 +157,117 @@ class Namespace_Test(unittest.TestCase) :
 
 	# Numbers (int, decimal, float)
 
+	def test_load_sexagesimal(self) :
+		ns = namespace.loads(
+			"attribute: 120:20:04"
+		)
+		self.assertEqual(type(ns.attribute), int)
+		self.assertEqual(ns.attribute,
+			(120*60 + 20)*60 + 4.0
+		)
+
 	def test_load_decimal(self) :
 		yamlcontent = (
-			"decimal: 3.41"
+			"attribute: 3.41"
 			)
 		ns = namespace.loads(yamlcontent)
-		self.assertEqual(type(ns.decimal),
+		self.assertEqual(type(ns.attribute),
 			decimal.Decimal)
-		self.assertEqual(ns.decimal,
+		self.assertEqual(ns.attribute,
 			decimal.Decimal('3.41'))
 
 	def test_load_decimal_negative(self) :
 		yamlcontent = (
-			"decimal: -3.41"
+			"attribute: -3.41"
 			)
 		ns = namespace.loads(yamlcontent)
-		self.assertEqual(type(ns.decimal),
-			decimal.Decimal)
-		self.assertEqual(ns.decimal,
-			decimal.Decimal('-3.41'))
+		self.assertEqual(type(ns.attribute), decimal.Decimal)
+		self.assertEqual(ns.attribute, decimal.Decimal('-3.41'))
 
 	def test_load_decimal_infinite(self) :
 		ns = namespace.loads(
-			"decimal: .inf"
+			"attribute: .inf"
 		)
-		self.assertEqual(type(ns.decimal),
-			float)
-		# Why not decimal?
-		self.assertEqual(ns.decimal,
-			float("inf"))
+		self.assertEqual(type(ns.attribute), decimal.Decimal)
+		self.assertEqual(ns.attribute, decimal.Decimal("Infinity"))
 
 	def test_load_decimal_minusInfinite(self) :
 		ns = namespace.loads(
-			"decimal: -.inf"
+			"attribute: -.inf"
 		)
-		self.assertEqual(type(ns.decimal),
-			float)
-		# Why not decimal?
-		self.assertEqual(ns.decimal,
-			float("-inf"))
+		self.assertEqual(type(ns.attribute), decimal.Decimal)
+		self.assertEqual(ns.attribute, decimal.Decimal("-Infinity"))
 
 	def test_load_decimal_notANumber(self) :
 		ns = namespace.loads(
-			"decimal: .nan"
+			"attribute: .nan"
 		)
-		self.assertEqual(type(ns.decimal),
-			float)
-		# Why not decimal?
-		self.assertTrue(math.isnan(ns.decimal) )
+		self.assertEqual(type(ns.attribute), decimal.Decimal)
+		self.assertTrue(ns.attribute.is_nan())
 
 	def test_dump_decimal_inf(self) :
 		ns = namespace()
-		ns.decimal = decimal.Decimal('-inf')
+		ns.attribute = decimal.Decimal('inf')
 		self.assertEqual(ns.dump(),
-			"decimal: -.inf\n"
+			"attribute: .inf\n"
+		)
+
+	def test_dump_decimal_minus_inf(self) :
+		ns = namespace()
+		ns.attribute = decimal.Decimal('-inf')
+		self.assertEqual(ns.dump(),
+			"attribute: -.inf\n"
 		)
 
 	def test_dump_float(self) :
 		ns = namespace()
-		ns.decimal = 3.41
+		ns.attribute = 3.41
 		self.assertEqual(ns.dump(),
-			"decimal: 3.41\n"
+			"attribute: 3.41\n"
 		)
 
 	def test_dump_float_inf(self) :
 
 		ns = namespace()
-		ns.decimal = float('inf')
+		ns.attribute = float('inf')
 		self.assertEqual(ns.dump(),
-			"decimal: .inf\n"
+			"attribute: .inf\n"
 		)
 
 	def test_dump_float_minusInf(self) :
 
 		ns = namespace()
-		ns.decimal = float('-inf')
+		ns.attribute = float('-inf')
 		self.assertEqual(ns.dump(),
-			"decimal: -.inf\n"
+			"attribute: -.inf\n"
 		)
 
 	def test_dump_decimal(self) :
 		ns = namespace()
-		ns.decimal = decimal.Decimal('3.41')
+		ns.attribute = decimal.Decimal('3.41')
 		self.assertEqual(ns.dump(),
-			"decimal: 3.41\n"
+			"attribute: 3.41\n"
 		)
 
 	def test_dump_float_nan(self):
 		ns = namespace()
-		ns.decimal = float('nan')
+		ns.attribute = float('nan')
 		self.assertEqual(ns.dump(),
-			"decimal: .nan\n"
+			"attribute: .nan\n"
 		)
 
 	def test_dump_decimal_nan(self):
 		ns = namespace()
-		ns.decimal = decimal.Decimal('nan')
+		ns.attribute = decimal.Decimal('NaN')
 		self.assertEqual(ns.dump(),
-			"decimal: .nan\n"
+			"attribute: .nan\n"
+		)
+
+	def test_dump_cientifical_notation(self):
+		ns = namespace()
+		ns.attribute = 1e17
+		self.assertEqual(ns.dump(),
+			"attribute: 1.0e+17\n"
 		)
 
 	# Dates, times

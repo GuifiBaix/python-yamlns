@@ -219,17 +219,8 @@ class NamespaceYamlDumper(SafeDumper):
 		elif data == -self.inf_value:
 			value = '-.inf'
 		else:
-			# Here previous version called repr
-			value = type(u'')(data).lower()
-			# Note that in some cases `repr(data)` represents a float number
-			# without the decimal parts.  For instance:
-			#   >>> repr(1e17)
-			#   '1e17'
-			# Unfortunately, this is not a valid float representation according
-			# to the definition of the `!!float` tag.  We fix this by adding
-			# '.0' before the 'e' symbol.
-			if '.' not in value and 'e' in value:
-				value = value.replace('e', '.0e', 1)
+			value = text(data).lower()
+
 		return self.represent_scalar('tag:yaml.org,2002:float', value)
 
 	def represent_np(self, data):
@@ -286,20 +277,10 @@ class NamespaceYAMLLoader(SafeLoader):
 		if value[0] in '+-':
 			value = value[1:]
 		if value == '.inf':
-			return sign*self.inf_value
-		elif value == '.nan':
-			return self.nan_value
-		elif ':' in value:
-			digits = [float(part) for part in value.split(':')]
-			digits.reverse()
-			base = 1
-			value = 0.0
-			for digit in digits:
-				value += digit*base
-				base *= 60
-			return sign*value
-		else:
-			return sign*decimal.Decimal(value)
+			return sign*decimal.Decimal("Infinity")
+		if value == '.nan':
+			return decimal.Decimal("NaN")
+		return sign*decimal.Decimal(value)
 
 	def construct_yaml_map(self, node):
 		data = namespace()
