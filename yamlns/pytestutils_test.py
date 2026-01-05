@@ -11,6 +11,7 @@ from .pytestutils import (
 )
 import pytest
 import sys
+import re
 
 py2 = sys.version_info < (3,)
 
@@ -25,6 +26,11 @@ def rmrf(path):
     for child in path.glob('*'):
         rmrf(child)
     path.rmdir()
+
+ANSI_RE = re.compile(r'\x1b\[[0-9;]*m')
+
+def strip_ansi(s: str) -> str:
+    return ANSI_RE.sub('', s)
 
 @pytest.fixture
 def clean_snapshotdir():
@@ -157,7 +163,7 @@ def test__assert_ns_equal__value_differs():
         if py2 else
         "  - key: expected\n"
         "  + key: result"
-    ) in format(exception.value)
+    ) in strip_ansi(format(exception.value))
 
 def test__assert_ns_equal__result_dict():
     # Should not raise
@@ -188,7 +194,7 @@ def test__assert_ns_equal__inner_values_differs():
         "  -   key1: value1\n"
         "  +   key1: mybad\n"
         "      key2: value2"
-    ) in format(exception.value)
+    ) in strip_ansi(format(exception.value))
 
 def test__assert_ns_equal__bothYaml():
     # Should not raise
@@ -242,7 +248,7 @@ def test__assert_ns_contains__missing_key():
             ns(common='common'),
             ns(common='common', missing='value'),
         )
-    assert format(exception.value) == (
+    assert strip_ansi(format(exception.value)) == (
         "assert 'common: common\\n' == 'common: common\\nmissing: value\\n'\n"
         "    common: common\n"
         "  + missing: value"
@@ -259,7 +265,7 @@ def test__assert_ns_contains__differing_key():
             ns(common='expected'),
         )
     print(repr(format(exception.value)))
-    assert format(exception.value) == (
+    assert strip_ansi(format(exception.value)) == (
         "assert 'common: different\\n' == 'common: expected\\n'\n"
         "  - common: different\n"
         "  + common: expected"
