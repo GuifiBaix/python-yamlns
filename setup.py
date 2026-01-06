@@ -19,8 +19,8 @@ setup(
 	entry_points=dict(
 		console_scripts = [
 			'json2yaml = yamlns.json2yaml:main',
-			'nstemplate = yamlns.nstemplate:main',
-			'nstemplate.py = yamlns.nstemplate:deprecated', # backwards compatibility
+			'nstemplate = yamlns.cli.nstemplate:main',
+			'nstemplate.py = yamlns.cli.nstemplate:deprecated', # backwards compatibility
 		],
 	),
 	install_requires=[

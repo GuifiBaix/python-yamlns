@@ -6,19 +6,14 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/yamlns)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/yamlns)
 
-An extended dictionary to conveniently access your structured data
-with direct mapping from and to YAML and other structured formats.
-
-Besides the item like `['field']` access, an attribute like access `.field` is provided.
-And it also provides many other goodies:
+An extended dictionary with convenient attribute access, YAML serialization and testing utilities.
 
 - Convenient access:
-    - Provides both attribute access `x.field` and regular key access `x.["field"]`
-    - Access to deep attributes `x['parent.child']`
+    - Attribute access `x.field` and regular key access `x.["field"]`
+    - Deep attributes `x['parent.child']`
 - YAML serialization with `x.dump()` and `x.load()`, with those convenient differences from pure YAML specs:
-    - Inner YAML **mappings** (`dict`s) are loaded as `namespace`s, instead of Python `dict`.
-    - Namespaces **preserve the insertion order**, as they are based on `odict`.
-      This way the insertion order and the order in the original loaded file is preserved when stored.
+    - YAML **mappings** (`dict`s) are loaded as `namespace`s, instead of Python `dict`.
+      They **preserve the insertion order**, as they are based on `odict`.
     - YAML **floats** are loaded as `Decimal` and `Decimal` objects are stored as regular YAML floats.
       This avoids losing precision when succesive load/store cycles are alternated.
     - YAML **dates** are maped to an extension of `datetime.date` which provides output formats as attributes
@@ -36,7 +31,7 @@ And it also provides many other goodies:
     - `pytestutils.assert_ns_equal`: equivalent to `assertNsEqual` to be used in pytest
     - `pytestutils.assert_ns_contains`: equivalent to `assertNsContains` to be used in pytest
     - `pytestutils.yaml_snapshot`: fixture to detect namespace changes between test executions in yaml format.
-    - `pytestutils.text_snapshot`: fixture to detect changes text changes between test executions.
+    - `pytestutils.text_snapshot`: fixture to detect str changes between test executions in plain text format.
 
 ## Example
 

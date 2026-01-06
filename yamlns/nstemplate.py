@@ -1,92 +1,26 @@
 #!/usr/bin/python3
 
-from . import namespace
 from .compat import text, Path
 import sys
 
 def apply(yamlfile, template, output, encoding='utf-8') :
-	yaml = namespace.load(yamlfile)
+	"""
+	Fills a template file with data in yamlfile to generate output.
+	"""
+	from . import ns
+	data = ns.load(yamlfile)
 	content = Path(template).read_text(encoding=encoding)
-	result = content.format(**yaml)
+	result = content.format(**data)
 	Path(output).write_text(text(result, encoding=encoding), encoding=encoding)
 
 def extract(input_template, output_yaml, encoding='utf-8') :
+	"""
+	Extracts a yaml file with the attribute structure deduced from template value insertions
+	and empty values so you can edit them and provide the proper data.
+	"""
+	from . import ns
 	content = Path(input_template).read_text(encoding=encoding)
-	ns = namespace.fromTemplateVars(content)
-	Path(output_yaml).write_text(text(ns.dump(), encoding=encoding), encoding=encoding)
-
-def main(args=sys.argv) : # pragma: no cover
-	import argparse
-
-	parser = argparse.ArgumentParser(
-		description="Takes a template and extract a yaml to fill it.",
-		)
-	parser.add_argument(
-		'--encoding',
-		default=None,
-		help="forces input encoder for templates",
-		dest='encoding',
-		)
-
-	sub = parser.add_subparsers(
-		dest='subcommand',
-		)
-
-	subparser = sub.add_parser(
-		'extract',
-		help='Collects the template vars from a template and renders an empty yaml file with them',
-		)
-	subparser.add_argument(
-		metavar='input.template',
-		dest='input_template',
-		)
-	subparser.add_argument(
-		metavar='output.yaml',
-		dest='output_yaml',
-		)
-
-	subparser = sub.add_parser(
-		'apply',
-		help='Apply structured data in a YAML file to a template',
-		)
-	subparser.add_argument(
-		metavar='input.yaml',
-		dest='input_yaml',
-		)
-	subparser.add_argument(
-		metavar='template',
-		dest='template',
-		)
-	subparser.add_argument(
-		metavar='output',
-		dest='output',
-		)
-
-	args = parser.parse_args()
-
-	if args.subcommand == 'extract' :
-		extract(args.input_template, args.output_yaml, args.encoding)
-		return 0
-
-	if args.subcommand == 'apply' :
-		apply(args.input_yaml, args.template, args.output, args.encoding)
-		return 0
-
-	parser.print_help()
-	return -1
-
-def deprecated(): # pragma: no cover
-	print(
-		"The script nstemplate.py is deprecated. "
-		"Use nstemplate instead (without the .py extension)"
-	)
-	sys.exit(-1)
-
-
-if __name__  == '__main__': # pragma: no cover
-	sys.exit(main())
-
-
-
+	schema = ns.fromTemplateVars(content)
+	Path(output_yaml).write_text(text(schema.dump(), encoding=encoding), encoding=encoding)
 
 # vim: sw=4 ts=4 noet

@@ -2,10 +2,13 @@
 
 ## Unreleased
 
-- 💥 .inf and .nan results in Decimal infinite and NaN instead of float's
+- 💥 YAML .inf and .nan properly returns Decimal infinite and NaN instead of float's
 - 💥 Private module structure compatible with pytest 9
+- 💥 `load` and `dump` parameters renamed to more neutral `source` and `target`
+- 💥 Removed compatibility with Python versions without libpath or libpath2 available
 - ♻️ Extracted Py2 and other compatibility utilities into a yamlns.compat
 - ♻️ Splitted serialization classes from main namespace class
+- ♻️ Splitted cli code from actual library modules
 - ✅ Better serialization test coverage
 
 ## yamlns 0.12.2 (2025-03-15)
