@@ -1,7 +1,7 @@
 import decimal
 import datetime
-from . import namespace
-from . import dateutils
+from .core import namespace
+from .dateutils import Date
 from .compat import text
 try:
 	import numpy as np
@@ -23,7 +23,7 @@ class NamespaceYamlDumper(SafeDumper):
 		self.add_representer(
 			decimal.Decimal, NamespaceYamlDumper.represent_float)
 		self.add_representer(
-			dateutils.Date, NamespaceYamlDumper.represent_date)
+			Date, NamespaceYamlDumper.represent_date)
 		if np:
 			self.add_representer(
 				np.ndarray, NamespaceYamlDumper.represent_np)
@@ -120,7 +120,7 @@ class NamespaceYAMLLoader(SafeLoader):
 	def construct_yaml_timestamp(self, node) :
 		result = super(NamespaceYAMLLoader,self).construct_yaml_timestamp(node)
 		if not isinstance(result, datetime.datetime):
-			return dateutils.Date(result)
+			return Date(result)
 		return result
 
 	def construct_mapping(self, node, deep=False):

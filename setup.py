@@ -18,7 +18,7 @@ setup(
 	packages=find_packages(exclude=['*_[tT]est*']),
 	entry_points=dict(
 		console_scripts = [
-			'json2yaml = yamlns.json2yaml:main',
+			'json2yaml = yamlns.cli.json2yaml:main',
 			'nstemplate = yamlns.cli.nstemplate:main',
 			'nstemplate.py = yamlns.cli.nstemplate:deprecated', # backwards compatibility
 		],

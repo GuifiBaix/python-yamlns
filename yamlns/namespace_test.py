@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
 
-from . import namespace
-from . import dateutils
-from . import Path
+from .core import namespace
+from .compat import Path
+from .dateutils import Date
 import decimal
 import datetime
 import math
@@ -278,14 +278,14 @@ class Namespace_Test(unittest.TestCase) :
 			)
 		ns = namespace.loads(yamlcontent)
 		self.assertEqual(type(ns.adate),
-			dateutils.Date)
+			Date)
 
 	def test_dump_dateutilsdate(self):
 		yamlcontent = (
 			"adate: 2000-02-28\n"
 			)
 		ns = namespace()
-		ns.adate = dateutils.Date(2000,2,28)
+		ns.adate = Date(2000,2,28)
 		self.assertEqual(ns.dump(),
 			yamlcontent)
 

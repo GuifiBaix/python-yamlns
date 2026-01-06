@@ -4,8 +4,8 @@ import unittest
 import sys
 import io
 import os
-from . import _varsTree, _collectVars, namespace
-from . import nstemplate
+from .core import _varsTree, _collectVars, namespace
+from .nstemplate import apply, extract
 
 class NSTemplate_test(unittest.TestCase) :
 
@@ -152,7 +152,7 @@ class NSTemplate_test(unittest.TestCase) :
 		self.toRemove(fileyaml)
 		self.write(filemd, u"{var1} {var2.foo}")
 
-		nstemplate.extract(filemd, fileyaml)
+		extract(filemd, fileyaml)
 
 		self.assertEqual(self.read(fileyaml),
 			u"var1: ''\n"
@@ -175,7 +175,7 @@ class NSTemplate_test(unittest.TestCase) :
 			u"  foo: 666\n"
 		)
 
-		nstemplate.apply(fileyaml, filemd, fileout)
+		apply(fileyaml, filemd, fileout)
 
 		self.assertEqual(self.read(fileout),
 			u"value1 666")

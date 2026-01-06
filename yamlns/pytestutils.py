@@ -1,11 +1,10 @@
-from . import Path, text
-from . import namespace as ns
+from .core import ns
+from .compat import Path, text
 from ._pytestutils_asserts.assert_impl import assert_ns_equal
 import pytest
 from .testutils import (
     normalize,
 )
-
 
 @pytest.fixture
 def test_name(request):

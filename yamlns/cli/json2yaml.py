@@ -1,5 +1,5 @@
-from . import ns
 import sys
+from ..core import ns
 
 def main(): # pragma: no cover
     import argparse

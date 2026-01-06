@@ -1,7 +1,7 @@
 # -*- encoding: utf8 -*-
 
 import unittest
-from . import namespace as ns
+from .core import ns
 
 class TestUtils_Test(unittest.TestCase):
 

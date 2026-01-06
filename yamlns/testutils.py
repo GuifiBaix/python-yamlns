@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from . import namespace as ns
+from .core import ns
 from .compat import isStr
 
 # Readable verbose testcase listing
