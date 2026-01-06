@@ -1,9 +1,9 @@
 # Change Log
 
-## Unreleased
+## yamlns 0.12.3 (2026-01-06)
 
 - 💥 Private module structure modernized (should not alter documented interface, may break undocumented usage)
-    - ♻️ `__init__` now does not contain definitions, only imports
+    - ♻️ `__init__` now does not contain definitions, only public imports
     - ♻️ ns/namespace definitions in `core` module
     - ♻️ yaml loader and dumper in `serialization`
     - ♻️ Py2 compatibility utilities in `compat`
@@ -16,6 +16,7 @@
 - 🧹 Removed compatibility with old Python versions (<2.7) unable to use libpath or libpath2
 - ✅ Better serialization test coverage
 - 🔧 Recovered Py2 CI
+- 🎨 Global code style changed to standard black
 
 ## yamlns 0.12.2 (2025-03-15)
 
