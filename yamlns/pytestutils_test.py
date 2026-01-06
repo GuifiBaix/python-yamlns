@@ -26,7 +26,7 @@ def rmrf(path):
 
 ANSI_RE = re.compile(r'\x1b\[[0-9;]*m')
 
-def strip_ansi(s: str) -> str:
+def strip_ansi(s):
     return ANSI_RE.sub('', s)
 
 @pytest.fixture
