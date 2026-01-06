@@ -27,8 +27,8 @@ class NamespaceYamlDumper(SafeDumper):
         if np:
             self.add_representer(np.ndarray, NamespaceYamlDumper.represent_np)
 
-        self.add_representer(type(""), NamespaceYamlDumper.represent_str)
-        if type("") != type(""):  # Py2 compat
+        self.add_representer(type(u""), NamespaceYamlDumper.represent_str)
+        if type(u"") != type(""):  # Py2 compat
             self.add_representer(type(""), NamespaceYamlDumper.represent_str)
 
     def represent_str(self, data):
@@ -37,7 +37,7 @@ class NamespaceYamlDumper(SafeDumper):
         return self.represent_scalar("tag:yaml.org,2002:str", data)
 
     def represent_date(self, data):
-        return self.represent_scalar("tag:yaml.org,2002:timestamp", type("")(data))
+        return self.represent_scalar("tag:yaml.org,2002:timestamp", text(data))
 
     def represent_float(self, data):
         if data != data or (data == 0.0 and data == 1.0):

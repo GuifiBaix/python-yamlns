@@ -119,14 +119,14 @@ class Namespace_Test(unittest.TestCase):
         self.assertEqual(ns.dump(), yamlcontent)
 
     def test_loads_fromEncodedUtf8(self):
-        yaml = "hi: caña\n".encode("utf-8")
+        yaml = u"hi: caña\n".encode("utf-8")
         result = namespace.loads(yaml)
-        self.assertEqual(result, namespace(hi="caña"))
+        self.assertEqual(result, namespace(hi=u"caña"))
 
     def test_loads_unicode(self):
         yaml = "hi: caña\n"
         result = namespace.loads(yaml)
-        self.assertEqual(result, namespace(hi="caña"))
+        self.assertEqual(result, namespace(hi=u"caña"))
 
     # Numbers (int, decimal, float)
 
@@ -392,54 +392,54 @@ class Namespace_Test(unittest.TestCase):
     # Sources an targets
 
     def test_load_fromFilename(self):
-        self.writeFile("hi: caña\n")
+        self.writeFile(u"hi: caña\n")
         result = namespace.load("test.yaml")
-        self.assertEqual(result, namespace(hi="caña"))
+        self.assertEqual(result, namespace(hi=u"caña"))
 
     def test_dump_toFileName(self):
-        data = namespace(otra="caña")
+        data = namespace(otra=u"caña")
         data.dump("test.yaml")
-        self.assertContent("otra: caña\n")
+        self.assertContent(u"otra: caña\n")
 
     @unittest.skipIf(not Path, "neither pathlib or pathlib2 not installed")
     def test_load_fromPath(self):
-        self.writeFile("hi: caña\n")
+        self.writeFile(u"hi: caña\n")
         result = namespace.load(Path("test.yaml"))
-        self.assertEqual(result, namespace(hi="caña"))
+        self.assertEqual(result, namespace(hi=u"caña"))
 
     @unittest.skipIf(not Path, "neither pathlib or pathlib2 not installed")
     def test_dump_toPath(self):
-        data = namespace(otra="caña")
+        data = namespace(otra=u"caña")
         data.dump(Path("test.yaml"))
-        self.assertContent("otra: caña\n")
+        self.assertContent(u"otra: caña\n")
 
     @unittest.skipIf(not py2, "PyYaml in Python 3 requires a text file")
     def test_load_fromBinaryFileObject(self):
-        self.writeFile("hi: caña\n")
+        self.writeFile(u"hi: caña\n")
         with io.open("test.yaml", "rb") as f:
             result = namespace.load(f)
-        self.assertEqual(result, namespace(hi="caña"))
+        self.assertEqual(result, namespace(hi=u"caña"))
 
     @unittest.skipIf(not py2, "PyYaml in Python 3 requires a text file")
     def test_dump_toBinaryFileObject(self):
-        data = namespace(otra="caña")
+        data = namespace(otra=u"caña")
         with io.open("test.yaml", "wb") as f:
             data.dump(f)
-        self.assertContent("otra: caña\n")
+        self.assertContent(u"otra: caña\n")
 
     @unittest.skipIf(py2, "PyYaml in Python 2 requires a binary file")
     def test_load_fromTextFileObject(self):
-        self.writeFile("hi: caña\n")
+        self.writeFile(u"hi: caña\n")
         with io.open("test.yaml", "r", encoding="utf8") as f:
             result = namespace.load(f)
-        self.assertEqual(result, namespace(hi="caña"))
+        self.assertEqual(result, namespace(hi=u"caña"))
 
     @unittest.skipIf(py2, "PyYaml in Python 2 requires a binary file")
     def test_dump_toTextFileObject(self):
-        data = namespace(otra="caña")
+        data = namespace(otra=u"caña")
         with io.open("test.yaml", "w", encoding="utf8") as f:
             data.dump(f)
-        self.assertContent("otra: caña\n")
+        self.assertContent(u"otra: caña\n")
 
     def test_deep_int(self):
         self.assertEqual(namespace.deep(2), 2)

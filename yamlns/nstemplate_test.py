@@ -141,11 +141,11 @@ class NSTemplate_test(unittest.TestCase):
         fileyaml = "deleteme.yaml"
         self.toRemove(filemd)
         self.toRemove(fileyaml)
-        self.write(filemd, "{var1} {var2.foo}")
+        self.write(filemd, u"{var1} {var2.foo}")
 
         extract(filemd, fileyaml)
 
-        self.assertEqual(self.read(fileyaml), "var1: ''\n" "var2:\n" "  foo: ''\n")
+        self.assertEqual(self.read(fileyaml), u"var1: ''\n" u"var2:\n" u"  foo: ''\n")
 
     def test_apply(self):
         filemd = "deleteme.md"
@@ -155,12 +155,12 @@ class NSTemplate_test(unittest.TestCase):
         self.toRemove(fileyaml)
         self.toRemove(fileout)
 
-        self.write(filemd, "{var1} {var2.foo}")
-        self.write(fileyaml, "var1: 'value1'\n" "var2:\n" "  foo: 666\n")
+        self.write(filemd, u"{var1} {var2.foo}")
+        self.write(fileyaml, u"var1: 'value1'\n" u"var2:\n" u"  foo: 666\n")
 
         apply(fileyaml, filemd, fileout)
 
-        self.assertEqual(self.read(fileout), "value1 666")
+        self.assertEqual(self.read(fileout), u"value1 666")
 
 
 # vim: sw=4 ts=4 noet

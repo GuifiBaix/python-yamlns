@@ -14,15 +14,15 @@ except ImportError:
 
 # Ensures that we get an unicode string, even in Py2
 def text(data, encoding="utf8"):
-    if type(data) is type(""):
+    if type(data) is type(u""):
         return data
     if type(data) is type(b""):
         return data.decode(encoding)
-    return type("")(data)
+    return type(u"")(data)
 
 
 def isStr(x):
     return type(x) in (
-        type(""),
+        type(u""),
         type(b""),
     )
