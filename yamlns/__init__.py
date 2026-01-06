@@ -100,23 +100,17 @@ class namespace(OrderedDict) :
 		return cls.load(io.StringIO(yamlContent))
 
 	@classmethod
-	def load(cls, inputfile) :
+	def load(cls, source) :
 		from .serialization import NamespaceYAMLLoader
 
 		# Already open read file
-		if hasattr(inputfile, 'read') :
-			return yaml.load(stream=inputfile, Loader=NamespaceYAMLLoader)
+		if hasattr(source, 'read') :
+			return yaml.load(stream=source, Loader=NamespaceYAMLLoader)
 
-		# Compatibility code when Path is not available
-		if not Path:
-			from io import open
-			with open(inputfile) as f:
-				return yaml.load(stream=f, Loader=NamespaceYAMLLoader)
-
-		with Path(inputfile).open() as f:
+		with Path(source).open() as f:
 			return yaml.load(stream=f, Loader=NamespaceYAMLLoader)
 
-	def dump(self, filename=None) :
+	def dump(self, target=None) :
 
 		def dumpit(stream) :
 			from .serialization import NamespaceYamlDumper
@@ -127,23 +121,17 @@ class namespace(OrderedDict) :
 				Dumper = NamespaceYamlDumper,
 			)
 
-		if filename is None:
-			return dumpit(filename)
+		if target is None:
+			return dumpit(target)
 
 		# Already open write file
-		if hasattr(filename,'write') :
-			return dumpit(filename)
+		if hasattr(target,'write') :
+			return dumpit(target)
 
 		import sys
 		mode = 'wb' if sys.version_info[0] == 2 else 'w'
 
-		# Compatibility code when Path is not available
-		if not Path:
-			from io import open
-			with open(filename, mode) as f :
-				return dumpit(f)
-
-		with Path(filename).open(mode) as f :
+		with Path(target).open(mode) as f :
 			return dumpit(f)
 
 
