@@ -1,5 +1,6 @@
 # DO NOT IMPORT THIS FILE DIRECTLY FROM pytestutils
 # IT WOULD BREAK pytest ASSERT REWRITE
+from ..compat import py2
 
 def _ensure_pytest_assert_rewrite_active(): # pragma: no cover
     spec = globals().get("__spec__")
@@ -18,8 +19,8 @@ def _ensure_pytest_assert_rewrite_active(): # pragma: no cover
 
     raise RuntimeError("\n".join(msg))
 
-
-_ensure_pytest_assert_rewrite_active()
+if not py2:
+    _ensure_pytest_assert_rewrite_active()
 
 
 from ..testutils import (
