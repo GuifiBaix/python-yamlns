@@ -1,5 +1,9 @@
 # Change Log
 
+## yamlns 0.12.4 (2026-01-06)
+
+- 🦖 Py2: black removed some string prefixes required for Py2
+
 ## yamlns 0.12.3 (2026-01-06)
 
 - 💥 Private module structure modernized (should not alter documented interface, may break undocumented usage)
