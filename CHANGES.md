@@ -8,13 +8,14 @@
     - ♻️ yaml loader and dumper in `serialization`
     - ♻️ Py2 compatibility utilities in `compat`
     - ♻️ command line code into `cli` package
-- 💥 YAML .inf and .nan properly returns Decimal infinite and NaN for consistency with other YAML floats.
-    Breaks if you relied in them to be Python floats.
+- 💥 YAML .inf and .nan properly loaded as Decimal Infinite and NaN consistently with other YAML floats.
+    May break if you relied in them to be Python float NaN and inf.
 - 💥 `load` and `dump` parameter renamed `filename` -> `source`/`target` as they could be open files or Path.
     Calls using keyword arguments should be updated.
 - 🐛 pytest assert implementation in a different package to ensure pytest assert rewrite
 - 🧹 Removed compatibility with old Python versions (<2.7) unable to use libpath or libpath2
 - ✅ Better serialization test coverage
+- 🔧 Recovered Py2 CI
 
 ## yamlns 0.12.2 (2025-03-15)
 
