@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 from .core import namespace
-from .compat import Path
+from .compat import Path, py2
 from .dateutils import Date
 import decimal
 import datetime
@@ -512,7 +512,7 @@ class Namespace_Test(unittest.TestCase) :
 		data.dump(Path('test.yaml'))
 		self.assertContent(u"otra: caña\n")
 
-	@unittest.skipIf(sys.version_info[0]>2,
+	@unittest.skipIf(not py2,
 		"PyYaml in Python 3 requires a text file")
 	def test_load_fromBinaryFileObject(self):
 		self.writeFile(u"hi: caña\n")
@@ -521,7 +521,7 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(result,
 			namespace(hi=u'caña'))
 
-	@unittest.skipIf(sys.version_info[0]>2,
+	@unittest.skipIf(not py2,
 		"PyYaml in Python 3 requires a text file")
 	def test_dump_toBinaryFileObject(self):
 		data = namespace(otra=u'caña')
@@ -529,7 +529,7 @@ class Namespace_Test(unittest.TestCase) :
 			data.dump(f)
 		self.assertContent(u"otra: caña\n")
 
-	@unittest.skipIf(sys.version_info[0]==2,
+	@unittest.skipIf(py2,
 		"PyYaml in Python 2 requires a binary file")
 	def test_load_fromTextFileObject(self):
 		self.writeFile(u"hi: caña\n")
@@ -538,7 +538,7 @@ class Namespace_Test(unittest.TestCase) :
 		self.assertEqual(result,
 			namespace(hi=u'caña'))
 
-	@unittest.skipIf(sys.version_info[0]==2,
+	@unittest.skipIf(py2,
 		"PyYaml in Python 2 requires a binary file")
 	def test_dump_toTextFileObject(self):
 		data = namespace(otra=u'caña')

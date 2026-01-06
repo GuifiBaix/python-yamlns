@@ -1,5 +1,9 @@
 # Compatibility abstractions
 
+# Discriminating Py2
+import sys
+py2 = sys.version_info < (3,)
+
 # This resolves pathlib in older Python versions
 try:
 	from pathlib2 import Path

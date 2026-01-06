@@ -8,13 +8,10 @@ from .pytestutils import (
     normalize,
     ns
 )
-from .compat import Path
+from .compat import Path, py2
 import pytest
 import sys
 import re
-
-py2 = sys.version_info < (3,)
-
 
 def rmrf(path):
     path = Path(path)
