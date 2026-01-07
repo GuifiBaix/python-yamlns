@@ -9,9 +9,9 @@
 An extended dictionary with convenient attribute access, YAML serialization and testing utilities.
 
 - Convenient access:
-    - Attribute access `x.field` and regular key access `x.["field"]`
+    - Attribute access `x.field` and regular key access `x["field"]`
     - Deep attributes `x['parent.child']`
-- YAML serialization with `x.dump()` and `x.load()`, with those convenient differences from pure YAML specs:
+- YAML serialization, with those convenient differences from pure YAML specs:
     - YAML **mappings** (`dict`s) are loaded as `namespace`s, instead of Python `dict`.
       They **preserve the insertion order**, as they are based on `odict`.
     - YAML **floats** are loaded as `Decimal` and `Decimal` objects are stored as regular YAML floats.
